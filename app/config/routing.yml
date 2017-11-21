@@ -17,3 +17,6 @@ about:
       template:     :static:about.html.twig
       maxAge:       86400
       sharedAge:    86400
+
+logout:
+    path: /logout
