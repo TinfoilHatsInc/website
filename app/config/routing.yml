@@ -1,3 +1,19 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+home:
+    path: /
+    defaults:
+      _controller:   FrameworkBundle:Template:template
+      template:     :static:index.html.twig
+      maxAge:       86400
+      sharedAge:    86400
+
+about:
+    path: /about
+    defaults:
+      _controller:   FrameworkBundle:Template:template
+      template:     :static:about.html.twig
+      maxAge:       86400
+      sharedAge:    86400

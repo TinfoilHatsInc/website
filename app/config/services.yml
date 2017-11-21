@@ -33,3 +33,10 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    tinfoil.command.create_admin:
+        class: AppBundle\Messaging\Handler\AddAdminUserHandler
+        public: true
+        arguments: ['@doctrine.orm.entity_manager', '@security.user_password_encoder.generic']
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\AddAdminUser }
