@@ -15,7 +15,7 @@ body {
 }
 
 header.masthead {
-  background: url("../images/1080.jpeg") no-repeat center center scroll;
+  background: url("../images/banner.png") no-repeat center center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -24,6 +24,12 @@ header.masthead {
 
 header.masthead>.overlay {
   padding: 5rem 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+header.masthead>.overlay-small {
+  padding: 3rem 0;
   text-align: center;
   background: rgba(0, 0, 0, 0.6);
 }
