@@ -19,7 +19,7 @@ class ProductType extends AbstractType
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('price', IntegerType::class)
-            ->add('add', SubmitType::class);
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

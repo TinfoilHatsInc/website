@@ -59,4 +59,30 @@ class ProductController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route(path="/{id}", name="admin_products_edit")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, Product $product)
+    {
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
+            return $this->redirectToRoute('admin_products');
+        }
+
+        return $this->render(':admin/product:edit.html.twig', [
+            'form' => $form->createView(),
+            'product' => $product
+        ]);
+    }
 }
