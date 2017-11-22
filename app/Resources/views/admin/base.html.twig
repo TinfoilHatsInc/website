@@ -37,13 +37,8 @@
 
 <body>
 
-    <div id="wrapper">
+    {% block body %}{% endblock %}
 
-        <!-- Navigation -->
-        {% include ':includes:menu-admin.html.twig' %}
-
-        {% block body %}{% endblock %}
-    </div>
     <!-- jQuery -->
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
 
