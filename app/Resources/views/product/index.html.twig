@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Our Products{% endblock %}
 
 {% block body %}
     <!-- Navigation -->
     {% include ':includes:menu-default.html.twig' %}
 
     <header class="masthead">
-        <div class="overlay">
+        <div class="overlay-small">
             <div class="container">
-                <h1 class="display-1 text-white">Tinfoil Hats, inc</h1>
-                <h2 class="display-4 text-white">Paranoid about privacy</h2>
+                <h1 class="display-1 text-white">Our Products</h1>
+                {#<h2 class="display-4 text-white">Paranoid about privacy</h2>#}
             </div>
         </div>
     </header>
@@ -80,5 +80,4 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
 {% endblock %}
