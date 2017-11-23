@@ -42,11 +42,21 @@
                                 </thead>
                                 <tbody>
                                 {% for product in products %}
-                                    <tr data-href="{{ path('admin_products_edit', {'id': product.id}) }}"
-                                        class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}" style="cursor: pointer">
+                                    <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}" style="cursor: pointer">
                                         <td>{{ product.name }}</td>
                                         <td>{{ product.price / 100 }}</td>
                                         <td>0</td>
+                                        <td>
+                                            <a href="{{ path('admin_products_show', {'id': product.id}) }}" class="btn btn-sm btn-primary">
+                                                <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="{{ path('admin_products_edit', {'id': product.id}) }}" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-pencil fa-fw" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="{{ path('admin_products_edit', {'id': product.id}) }}" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -80,9 +90,9 @@
                 responsive: true
             });
 
-            $('#dataTables-products').on( 'click', 'tbody tr', function () {
-                window.location.href = $(this).data('href');
-            });
+//            $('#dataTables-products').on( 'click', 'tbody tr', function () {
+//                window.location.href = $(this).data('href');
+//            });
         });
     </script>
 {% endblock %}
