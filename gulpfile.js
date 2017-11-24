@@ -92,7 +92,7 @@ gulp.task('minify-js', ['js'], function() {
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('dist/js'))
+        .pipe(gulp.dest('web/assets/dist/js'))
         .pipe(browserSync.reload({
             stream: true
         }))

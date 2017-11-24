@@ -26,6 +26,8 @@
     <!-- Custom Fonts -->
     <link href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
+    {% block stylesheets_header %}{% endblock %}
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -55,5 +57,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{{ asset('assets/dist/js/sb-admin-2.js') }}"></script>
+
+    {% block js_bottom %}{% endblock %}
 </body>
 </html>

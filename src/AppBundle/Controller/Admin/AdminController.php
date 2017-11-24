@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("has_role('ROLE_ADMIN')")
+ * @Route(path="/admin")
  *
  * Class AdminController
  * @package AppBundle\Controller\Admin
@@ -18,13 +19,12 @@ class AdminController extends Controller
 {
 
     /**
-     * @Route(path="/admin", name="admin")
+     * @Route(path="", name="admin")
      * @Method("GET")
      *
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         return $this->render(':admin:index.html.twig');
     }
