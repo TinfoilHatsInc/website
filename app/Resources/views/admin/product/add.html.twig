@@ -35,7 +35,12 @@
                             </div>
                             <div class="form-group">
                                 {{ form_label(form.price) }}
-                                {{ form_widget(form.price, { 'attr': {'class': 'form-control'} }) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-eur"></i>
+                                    </span>
+                                    {{ form_widget(form.price, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
                             </div>
                             <div class="form-group">
                                 {{ form_widget(form.save, { 'attr': {'class': 'btn btn-success'} }) }}
