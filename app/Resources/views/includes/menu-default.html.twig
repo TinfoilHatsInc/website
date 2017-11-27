@@ -8,11 +8,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item {% if currentPath is empty %}active{% endif %}">
+                <li class="nav-item {% if currentPath == '/' %}active{% endif %}">
                     <a class="nav-link" href="{{ path('home') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <li class="nav-item {% if currentPath == '/about' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('about') }}">About us</a>
                 </li>
                 <li class="nav-item {% if currentPath == '/products' %}active{% endif %}">
                     <a class="nav-link" href="{{ path('products') }}">Products</a>

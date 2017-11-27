@@ -52,7 +52,7 @@ class ProductController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute('admin_products');
+            return $this->redirectToRoute('admin_products_show', ['id' => $product->getId()]);
         }
 
         return $this->render(':admin/product:add.html.twig', [
@@ -61,7 +61,21 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route(path="/{id}", name="admin_products_edit")
+     * @Route(path="/{id}", name="admin_products_show")
+     * @Method("GET")
+     *
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction(Product $product)
+    {
+        return $this->render(':admin/product:show.html.twig', [
+            'product' => $product
+        ]);
+    }
+
+    /**
+     * @Route(path="/edit/{id}", name="admin_products_edit")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -77,7 +91,7 @@ class ProductController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute('admin_products');
+            return $this->redirectToRoute('admin_products_show', ['id' => $product->getId()]);
         }
 
         return $this->render(':admin/product:edit.html.twig', [
