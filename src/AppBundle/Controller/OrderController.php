@@ -46,6 +46,6 @@ class OrderController extends Controller
      */
     public function showOrderAction(Order $order)
     {
-        var_dump($order);die;
+        var_dump($order->getPaymentStatus());die;
     }
 }
