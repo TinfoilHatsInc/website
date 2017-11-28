@@ -60,6 +60,13 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order", mappedBy="user")
+     */
+    private $orders;
+
+    /**
      * @var Collection
      *
      * @ManyToMany(targetEntity="AppBundle\Entity\Role")
@@ -74,6 +81,7 @@ class User implements UserInterface, \Serializable
     {
         $this->isActive = true;
         $this->roles = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**
