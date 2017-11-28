@@ -22,6 +22,7 @@ class OrderController extends Controller
      * @Route(path="/create", name="create_order")
      *
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createOrderAction(Request $request)
     {
@@ -33,9 +34,9 @@ class OrderController extends Controller
         $order->setUser($this->getUser());
         $this->getDoctrine()->getManager()->persist($order);
         $this->getDoctrine()->getManager()->flush();
-        $mollieService->createPayment($order);
+        $redirectUrl = $mollieService->createPayment($order);
 
-        return new Response(json_encode($order));
+        return $this->redirect($redirectUrl);
     }
 
     /**

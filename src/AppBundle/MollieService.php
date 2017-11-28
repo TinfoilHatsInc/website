@@ -48,6 +48,8 @@ class MollieService
 
     /**
      * @param Order $order
+     *
+     * @return null|string payment url
      */
     public function createPayment(Order $order)
     {
@@ -63,6 +65,7 @@ class MollieService
         $order->setPaymentId($molliePayment->id);
         $order->setPaymentStatus($molliePayment->status);
         $this->em->flush();
+        return $molliePayment->getPaymentUrl();
     }
 
     /**
