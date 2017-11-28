@@ -19,7 +19,7 @@ class AdminController extends Controller
 {
 
     /**
-     * @Route(path="", name="admin")
+     * @Route(path="/", name="admin")
      * @Method("GET")
      *
      * @return \Symfony\Component\HttpFoundation\Response
