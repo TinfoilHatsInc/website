@@ -47,18 +47,10 @@ class MollieService
     }
 
     /**
-     * @param array $products
-     * @param User $user
+     * @param Order $order
      */
-    public function createPayment(array $products, User $user)
+    public function createPayment(Order $order)
     {
-        $order = new Order();
-        $order->setProducts(new ArrayCollection($products));
-        $order->setUser($user);
-        $this->em->persist($order);
-        $this->em->flush();
-
-
         $molliePayment = $this->mollieApi->payments->create([
             "amount"    => 10,
             "description"   => "test payment",
@@ -71,7 +63,6 @@ class MollieService
         $order->setPaymentId($molliePayment->id);
         $order->setPaymentStatus($molliePayment->status);
         $this->em->flush();
-        return $order;
     }
 
     public function processPayment(array $payment)

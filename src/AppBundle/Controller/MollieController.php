@@ -15,6 +15,6 @@ class MollieController extends Controller
      */
     public function mollieWebhookAction(Request $request)
     {
-        var_dump($request->getContent());die;
+        $this->get('logger')->debug($request->getContent());
     }
 }
