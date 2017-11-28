@@ -71,6 +71,7 @@ class MollieService
         $order->setPaymentId($molliePayment->id);
         $order->setPaymentStatus($molliePayment->status);
         $this->em->flush();
+        return $order;
     }
 
     public function processPayment(array $payment)

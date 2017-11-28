@@ -7,6 +7,7 @@ use AppBundle\Entity\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route(path="/orders")
@@ -25,7 +26,8 @@ class OrderController extends Controller
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
         $mollieService = $this->get('tinfoil.service.mollie');
-        $mollieService->createPayment($products, $this->getUser());
+        $order = $mollieService->createPayment($products, $this->getUser());
+        return new Response(json_encode($order));
     }
 
     /**
