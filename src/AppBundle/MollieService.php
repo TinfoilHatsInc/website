@@ -65,8 +65,16 @@ class MollieService
         $this->em->flush();
     }
 
-    public function processPayment(array $payment)
+    /**
+     * @param $paymentId
+     */
+    public function processPayment($paymentId)
     {
-
+        $molliePayment = $this->mollieApi->payments->get($paymentId);
+        $order = $this->em->getRepository(Order::class)->findOneBy([
+            'paymentId' => $paymentId
+        ]);
+        $order->setPaymentStatus($molliePayment->status);
+        $this->em->flush();
     }
 }
