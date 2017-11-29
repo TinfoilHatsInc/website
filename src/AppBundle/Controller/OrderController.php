@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route(path="/orders")
@@ -43,9 +42,12 @@ class OrderController extends Controller
      * @Route(path="/{id}", name="show_order")
      *
      * @param Order $order
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showOrderAction(Order $order)
     {
-        var_dump($order->getPaymentStatus());die;
+        return $this->render(':order:payment_complete.html.twig', [
+            'order' => $order
+        ]);
     }
 }
