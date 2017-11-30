@@ -10,8 +10,6 @@ namespace AppBundle;
 
 
 use AppBundle\Entity\Order;
-use AppBundle\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Router;
 
@@ -54,7 +52,7 @@ class MollieService
     public function createPayment(Order $order)
     {
         $molliePayment = $this->mollieApi->payments->create([
-            "amount"    => 10,
+            "amount"    => $this->calculateTotal($order),
             "description"   => "test payment",
             "redirectUrl"   => $this->router->generate('show_order', ['id' => $order->getId()], Router::ABSOLUTE_URL),
             "webhookUrl"    => $this->router->generate('mollie_webhook', [], Router::ABSOLUTE_URL)
@@ -66,6 +64,27 @@ class MollieService
         $order->setPaymentStatus($molliePayment->status);
         $this->em->flush();
         return $molliePayment->getPaymentUrl();
+    }
+
+    /**
+     * Calculate Order total
+     *
+     * @param Order $order
+     * @return int
+     */
+    private function calculateTotal(Order $order)
+    {
+        $total = 0;
+        foreach ($order->getProducts() as $product) {
+            $total += $product->getPrice();
+        }
+        return $total;
+    }
+
+    private function createOrderDescription(Order $order)
+    {
+        //TODO sanitze
+        return sprintf("Order for user: %s at %s", '');
     }
 
     /**
