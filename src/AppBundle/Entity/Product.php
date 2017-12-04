@@ -9,6 +9,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Class Product
@@ -16,9 +18,14 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="product")
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ *
+ * @Vich\Uploadable()
  */
 class Product
 {
+    use Timestampable;
+
     /**
      * @var int
      *
@@ -50,6 +57,34 @@ class Product
      * @ORM\Column(type="integer")
      */
     private $price;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
+     */
+    private $imageFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imageName;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="product_icon", fileNameProperty="iconName")
+     */
+    private $iconFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $iconName;
 
     /**
      * @return int
@@ -105,5 +140,93 @@ class Product
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     *
+     * @return $this
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->setUpdatedAt();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string $imageName
+     *
+     * @return $this
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getIconFile()
+    {
+        return $this->iconFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $icon
+     *
+     * @return $this
+     */
+    public function setIconFile(File $icon = null)
+    {
+        $this->iconFile = $icon;
+
+        if ($icon) {
+            $this->setUpdatedAt();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIconName()
+    {
+        return $this->iconName;
+    }
+
+    /**
+     * @param string $iconName
+     *
+     * @return $this
+     */
+    public function setIconName($iconName)
+    {
+        $this->iconName = $iconName;
+
+        return $this;
     }
 }

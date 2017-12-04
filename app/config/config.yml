@@ -74,3 +74,21 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
     organize_migrations: false
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        product_image:
+            uri_prefix:         /assets/images/products
+            upload_destination: '%kernel.root_dir%/../web/assets/images/products'
+            namer:              vich_uploader.namer_uniqid
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+        product_icon:
+            uri_prefix:         /assets/images/products/icons
+            upload_destination: '%kernel.root_dir%/../web/assets/images/products/icons'
+            namer:              vich_uploader.namer_uniqid
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
