@@ -87,12 +87,10 @@ class Order
     /**
      * @var Country
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Country")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
     private $country;
-
-
 
     public function __construct()
     {
