@@ -26,6 +26,55 @@
     <hr noshade>
     <section>
         <div class="container">
+            <div class="d-flex justify-content-center">
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/cctv.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center"  onclick="product1()">
+                        <p class="white-text">Security Camera</p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">                        
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/door.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product2()">
+                        <p class="white-text">Door Sensor</p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/fingerprint.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product3()">
+                        <p class="white-text">Fingerprint Scan<p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/motion.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product4()">
+                        <p class="white-text">IR Sensor</p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/light.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product5()">
+                        <p class="white-text">Light Module</p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/pressure.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product6()">
+                        <p class="white-text">Step-on Sensor</p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/speaker.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product7()">
+                        <p class="white-text">Siren</p>
+                    </div>
+                </div>
+                <div class="view overlay hm-blue-strong">
+                    <div class="p-2"><img src="{{ asset('assets/images/icons/wire.png') }}" height="120" width="120" class="img-fluid"></div>
+                    <div class="mask flex-center" onclick="product8()">
+                        <p class="white-text">Tripwire</p>
+                    </div>
+
             <div class="row align-items-center">
                 <div class="d-flex justify-content-around">
                     {% for product in products %}
@@ -87,20 +136,135 @@
     <script type = "text/javascript">
         function product1()
         {
-            document.getElementById("product-img").src = "{{ asset('assets/images/camera.jpg') }}";
+            document.getElementById("product-img").src = "{{ asset('assets/images/products/camera-2.jpg') }}";
             document.getElementById("product-name").innerHTML = 'Security Camera';
-            document.getElementById("product-price").innerHTML = 'Price: 59,99€';
-            document.getElementById("product-description").innerHTML = 'This is our Security Camera .........................';
-
+            document.getElementById("product-price").innerHTML = '59,99€';
+            document.getElementById("product-description").innerHTML = 'Keep an eye on your home';
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/record.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Record<br />video';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/snapshot.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Take<br />Snapshots';
         }
         function product2()
         {
-            document.getElementById("product-img").src ="{{ asset('assets/images/door.jpg') }}";
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/door-2.jpg') }}";
             document.getElementById("product-name").innerHTML = 'Door/Window Sensor';
-            document.getElementById("product-price").innerHTML = 'Price: 29,99€';
-            document.getElementById("product-description").innerHTML = 'This is our Door/Window Sensor .........................';
+            document.getElementById("product-price").innerHTML = '29,99€';
+            document.getElementById("product-description").innerHTML = 'Secure your entry points';
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/alert.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Intruder<br />alerts';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/time.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Easy to<br />install';
         } 
+        function product3()
+        {
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/fingerprint.jpg') }}";
+            document.getElementById("product-name").innerHTML = 'Fingerprint Reader + Keypad';
+            document.getElementById("product-price").innerHTML = '29,99€';
+            document.getElementById("product-description").innerHTML = 'Only you can disable your system';            
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/user.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Easy<br />login';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/secure.png') }}";
+            document.getElementById("feature2-text").innerHTML = '100%<br />Secure';
+        } 
+        function product4()
+        {
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/motion.jpg') }}";
+            document.getElementById("product-name").innerHTML = 'IR Motion Sensor';
+            document.getElementById("product-price").innerHTML = '39,99€';
+            document.getElementById("product-description").innerHTML = 'Detect any movement';
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/alert.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Intruder<br />alerts';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/time.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Easy to<br />install';
+        }
+        function product5()
+        {
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/light.jpg') }}";
+            document.getElementById("product-name").innerHTML = 'Light Module';
+            document.getElementById("product-price").innerHTML = '29,99€';
+            document.getElementById("product-description").innerHTML = 'Link your lights with your security system';   
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/light.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Control<br />behavior';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/time.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Easy to<br />install';
+        }
+        function product6()
+        {
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/pressure.jpg') }}";
+            document.getElementById("product-name").innerHTML = 'Step-on Sensor';
+            document.getElementById("product-price").innerHTML = '29,99€';
+            document.getElementById("product-description").innerHTML = 'Detect intruders footsteps';   
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/alert.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Intruder<br />alerts';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/time.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Easy to<br />install';  
+        }  
+        function product7()
+        {
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/siren.jpg') }}";
+            document.getElementById("product-name").innerHTML = 'Siren Module';
+            document.getElementById("product-price").innerHTML = '39,99€';
+            document.getElementById("product-description").innerHTML = 'Let burglars know they have been spotted';
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/sound.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Loud<br />alarm';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/time.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Easy to<br />install';    
+        }
+        function product8()
+        {
+            document.getElementById("product-img").src ="{{ asset('assets/images/products/tripwire.jpg') }}";
+            document.getElementById("product-name").innerHTML = 'Tripwire Sensor';
+            document.getElementById("product-price").innerHTML = '29,99€';
+            document.getElementById("product-description").innerHTML = 'Easily protect a hallway';
+            document.getElementById("feature1").src = "{{ asset('assets/images/features/alert.png') }}";
+            document.getElementById("feature1-text").innerHTML = 'Intruder<br />alerts';
+            document.getElementById("feature2").src = "{{ asset('assets/images/features/time.png') }}";
+            document.getElementById("feature2-text").innerHTML = 'Easy to<br />install';   
+        }
     </script>
+
+    <section>
+    <div class="split" style="margin-top: -16px;">
+        <div class="left-half">
+            <article>
+                <img id="product-img" src="{{ asset('assets/images/products/camera-2.jpg') }}" class="img-fluid"  alt="">
+            </article>
+        </div>
+        <div class="right-half">
+            <div class="d-flex justify-content-center">
+                <h2 id="product-name" class="display-4" style="font-weight:bold;margin-bottom:10px;">Security Camera</h2>
+            </div>
+            <div class="d-flex justify-content-center">
+                <h2 id="product-description" class="display-6" style="margin-bottom:25px;">Keep an eye on your home</h2>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="d-flex flex-column" style="margin-right:45px;">
+                    <img id="feature1" src="{{ asset('assets/images/features/record.png') }}" style="width:70px;height:70px;margin-bottom:10px;" class="img-fluid">
+                    <p id="feature1-text" style="text-align:center;">Record<br />video</p>
+                </div>
+                <div class="d-flex flex-column" style="margin-right:40px;">
+                    <img id="feature2" src="{{ asset('assets/images/features/snapshot.png') }}" style="width:70px;height:70px;margin-bottom:10px;" class="img-fluid">
+                    <p id="feature2-text" style="text-align:center;">Take<br />Snapshots</p>
+                </div>
+                <div class="d-flex flex-column">
+                    <img src="{{ asset('assets/images/features/euro.png') }}" style="width:70px;height:70px;margin-bottom:10px;" class="img-fluid">
+                    <p id="product-price"style="text-align:center;">59,99€</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr noshade style="margin-top: 0px;">
+    </section>
+
+    <section>
+        <div class="d-flex justify-content-center">
+            <div class="p-1">Start customizing your system now and make your house safer</div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-outline-primary">Shop</a>
+        </div>  
+    </section>
 
     {% for product in products %}
         <section style="margin-top: 20px;">

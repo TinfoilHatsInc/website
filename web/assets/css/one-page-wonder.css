@@ -7631,3 +7631,29 @@ table.table-sm td {
   z-index: 2;
   background: inherit;
 }
+
+/* Pattern styles */
+.split {
+  display: flex;
+  background-color: #f5f5f5;
+}
+
+.left-half {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding: 1rem;
+  margin-top: -16px;
+  margin-left: -16px;
+  margin-bottom: -16px;
+}
+
+.right-half {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding: 1rem;
+  background-color: #f5f5f5;
+}
