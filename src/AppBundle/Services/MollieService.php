@@ -72,12 +72,13 @@ class MollieService
             $orderProduct->setProduct($product['product']);
             $orderProduct->setAmount($product['amount']);
             $orderProduct->setOrder($order);
+            $this->em->persist($orderProduct);
         }
 
         $order->setOrderedProducts(new ArrayCollection($productArray));
         $this->mollieApi->setApiKey($this->apiKey);
         $molliePayment = $this->mollieApi->payments->create([
-            "amount"    => $cart->getTotalCost(),
+            "amount"    => $cart->getTotalCost() / 100,
             "description"   => $this->createOrderDescription($order),
             "redirectUrl"   => $this->router->generate('show_order', ['id' => $order->getId()], Router::ABSOLUTE_URL),
             "webhookUrl"    => $this->router->generate('mollie_webhook', [], Router::ABSOLUTE_URL)
