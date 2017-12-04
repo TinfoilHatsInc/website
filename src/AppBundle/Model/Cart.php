@@ -9,9 +9,37 @@
 namespace AppBundle\Model;
 
 
+use AppBundle\Entity\Product;
+use AppBundle\Services\ShoppingCartService;
+
 class Cart
 {
+    /**
+     * @var array
+     */
     private $products;
 
+    /**
+     * @return array
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
 
+    public function addProduct(Product $product, $amount)
+    {
+        $this->products[] = [
+            'product' => $product,
+            'amount' => $amount
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalCost()
+    {
+        return ShoppingCartService::calculateCartTotal($this);
+    }
 }

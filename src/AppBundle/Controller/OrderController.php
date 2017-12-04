@@ -3,14 +3,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Order;
-use AppBundle\Entity\Product;
-use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\User;
+use AppBundle\Form\OrderType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route(path="/orders")
+ * @Route(path="/order")
  *
  * Class OrderController
  * @package AppBundle\Controller
@@ -18,24 +19,40 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderController extends Controller
 {
     /**
-     * @Route(path="/create", name="create_order")
+     * @Route(path="/", name="create_order")
+     * @Method({"POST", "GET"})
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createOrderAction(Request $request)
     {
-        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
-        $mollieService = $this->get('tinfoil.service.mollie');
-
         $order = new Order();
-//        $order->setProducts(new ArrayCollection($products));
-        $order->setUser($this->getUser());
-        $this->getDoctrine()->getManager()->persist($order);
-        $this->getDoctrine()->getManager()->flush();
-        $redirectUrl = $mollieService->createPayment($order);
+        /** @var User $user */
+        $user = $this->getUser();
+        if($this->isGranted('ROLE_USER')) {
+            $order->setUser($this->getDoctrine()->getRepository(User::class)->find(1));
+            $order->setCity($user->getCity());
+            $order->setAddress($user->getAddress());
+            $order->setZipcode($user->getZipcode());
+            $order->setCountry($user->getCountry());
+        }
 
-        return $this->redirect($redirectUrl);
+        $form = $this->createForm(OrderType::class, $order);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->persist($order);
+            $this->getDoctrine()->getManager()->flush();
+
+            $mollieService = $this->get('tinfoil.service.mollie');
+            $redirectUrl = $mollieService->createPayment($order);
+            return $this->redirect($redirectUrl);
+        }
+
+        return $this->render(':order:create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**

@@ -46,3 +46,8 @@ services:
         public: true
         arguments: ['%mollie_api_key%', '@doctrine.orm.entity_manager', '@router']
         scope: request
+
+    tinfoil.service.cart:
+        class: AppBundle\Services\ShoppingCartService
+        public: true
+        arguments: ['@session', '@doctrine.orm.entity_manager']

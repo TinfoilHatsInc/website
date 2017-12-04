@@ -150,7 +150,7 @@ class Order
     /**
      * @param ArrayCollection $orderedProducts
      */
-    public function setOrderedProducts($orderedProducts)
+    public function setOrderedProducts(ArrayCollection $orderedProducts)
     {
         $this->orderedProducts = $orderedProducts;
     }

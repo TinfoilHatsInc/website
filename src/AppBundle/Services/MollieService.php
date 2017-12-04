@@ -10,6 +10,8 @@ namespace AppBundle\Services;
 
 
 use AppBundle\Entity\Order;
+use AppBundle\Entity\OrderProduct;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Router;
 
@@ -31,17 +33,28 @@ class MollieService
     private $router;
 
     /**
+     * @var ShoppingCartService
+     */
+    private $shoppingCartService;
+
+    /**
+     * @var string
+     */
+    private $apiKey;
+
+    /**
      * MollieService constructor.
      * @param string $apiKey
      * @param EntityManager $em
      * @param Router $router
      */
-    public function __construct($apiKey, EntityManager $em, Router $router)
+    public function __construct($apiKey, EntityManager $em, Router $router, ShoppingCartService $shoppingCartService)
     {
         $this->mollieApi = new \Mollie_API_Client();
-        $this->mollieApi->setApiKey($apiKey);
         $this->em = $em;
         $this->router = $router;
+        $this->shoppingCartService = $shoppingCartService;
+        $this->apiKey = $apiKey;
     }
 
     /**
@@ -51,9 +64,21 @@ class MollieService
      */
     public function createPayment(Order $order)
     {
+        $cart = $this->shoppingCartService->buildModelFromSession();
+
+        $productArray = [];
+        foreach ($cart->getProducts() as $product) {
+            $orderProduct = new OrderProduct();
+            $orderProduct->setProduct($product['product']);
+            $orderProduct->setAmount($product['amount']);
+            $orderProduct->setOrder($order);
+        }
+
+        $order->setOrderedProducts(new ArrayCollection($productArray));
+        $this->mollieApi->setApiKey($this->apiKey);
         $molliePayment = $this->mollieApi->payments->create([
-            "amount"    => $this->calculateTotal($order),
-            "description"   => "test payment",
+            "amount"    => $cart->getTotalCost(),
+            "description"   => $this->createOrderDescription($order),
             "redirectUrl"   => $this->router->generate('show_order', ['id' => $order->getId()], Router::ABSOLUTE_URL),
             "webhookUrl"    => $this->router->generate('mollie_webhook', [], Router::ABSOLUTE_URL)
         ]);
@@ -66,25 +91,10 @@ class MollieService
         return $molliePayment->getPaymentUrl();
     }
 
-    /**
-     * Calculate Order total
-     *
-     * @param Order $order
-     * @return int
-     */
-    private function calculateTotal(Order $order)
-    {
-        $total = 0;
-        foreach ($order->getProducts() as $product) {
-            $total += $product->getPrice();
-        }
-        return $total;
-    }
-
     private function createOrderDescription(Order $order)
     {
         //TODO sanitze
-        return sprintf("Order for user: %s at %s", '');
+        return sprintf("Order for user: %s", $order->getUser()->getLastName());
     }
 
     /**
