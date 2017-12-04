@@ -29,7 +29,7 @@ class OrderController extends Controller
         $mollieService = $this->get('tinfoil.service.mollie');
 
         $order = new Order();
-        $order->setProducts(new ArrayCollection($products));
+//        $order->setProducts(new ArrayCollection($products));
         $order->setUser($this->getUser());
         $this->getDoctrine()->getManager()->persist($order);
         $this->getDoctrine()->getManager()->flush();

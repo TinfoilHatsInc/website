@@ -6,7 +6,7 @@
  * Time: 10:17
  */
 
-namespace AppBundle;
+namespace AppBundle\Services;
 
 
 use AppBundle\Entity\Order;
