@@ -23,13 +23,15 @@ class ProductType extends AbstractType
                 'label' => 'Price (in cents)'
             ])
             ->add('imageFile', VichImageType::class, [
-                'required' => true,
+                'required' => is_null($builder->getData()->getImageName()),
                 'allow_delete' => false,
+                'download_link' => true,
                 'label' => 'Product Image'
             ])
             ->add('iconFile', VichImageType::class, [
-                'required' => true,
+                'required' => is_null($builder->getData()->getIconName()),
                 'allow_delete' => false,
+                'download_link' => true,
                 'label' => 'Product Icon'
             ])
             ->add('save', SubmitType::class);

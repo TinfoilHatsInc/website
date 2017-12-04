@@ -35,13 +35,25 @@
                                         <td>Name</td>
                                         <td>{{ product.name }}</td>
                                     </tr>
-                                    <tr class="odd">
+                                    <tr class="even">
                                         <td>Description</td>
                                         <td>{{ product.description }}</td>
                                     </tr>
                                     <tr class="odd">
                                         <td>Price</td>
                                         <td>{{ product.price / 100 }}</td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td>Image</td>
+                                        <td>
+                                            <img id="product-img" src="{{ vich_uploader_asset(product, 'imageFile') }}" style="width: 100px" class="img-fluid" alt="">
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td>Icon</td>
+                                        <td>
+                                            <img id="product-img" src="{{ vich_uploader_asset(product, 'iconFile') }}" style="width: 50px" class="img-fluid" alt="">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

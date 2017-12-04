@@ -44,9 +44,11 @@
                             </div>
                             <div class="form-group">
                                 {{ form_widget(form.imageFile) }}
+                                <img id="product-img" src="{{ vich_uploader_asset(product, 'imageFile') }}" class="img-fluid" style="width: 50px" alt="">
                             </div>
                             <div class="form-group">
                                 {{ form_widget(form.iconFile) }}
+                                <img id="product-img" src="{{ vich_uploader_asset(product, 'iconFile') }}" class="img-fluid" style="width: 30px" alt="">
                             </div>
                             <div class="form-group">
                                 {{ form_widget(form.save, { 'attr': {'class': 'btn btn-success'} }) }}
