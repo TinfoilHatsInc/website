@@ -42,15 +42,19 @@
                         <h2 class="display-5">Products</h2>
                         <table width="100%" class="table table-striped table-hover">
                             <tbody>
-                            {% for product in order.products %}
-                                <tr style="cursor: pointer">
-                                    <td>image</td>
-                                    <td>{{ product.name }}</td>
-                                    <td>&euro; {{ product.price / 100 }}</td>
+                            {% for orderedProduct in order.orderedProducts %}
+                                <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}" style="cursor: pointer">
+                                    <td>
+                                        <img id="product-img" src="{{ vich_uploader_asset(orderedProduct.product, 'imageFile') }}" style="width: 120px" class="img-fluid" alt="{{ orderedProduct.product.name }}">
+                                    </td>
+                                    <td>{{ orderedProduct.product.name }}</td>
+                                    <td>&euro; {{ orderedProduct.product.price / 100 }}</td>
+                                    <td>&num; {{ orderedProduct.amount }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
+                        <strong>Total: &euro;</strong> {{ order.totalCost / 100 }}
                     </div>
                     <div class="p-5">
                         <h2 class="display-5">Shipping Details</h2>
@@ -58,7 +62,7 @@
                             <strong>{{ order.user.firstName }} {{  order.user.lastName }}</strong><br>
                             {{ order.country.name|capitalize }}<br>
                             {{ order.city }}, {{ order.zipcode }}<br>
-                            (123) 456-7890
+                            {{ order.user.phoneNumber }}
                         </address>
                     </div>
                 </div>

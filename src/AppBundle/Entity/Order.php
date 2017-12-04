@@ -48,13 +48,9 @@ class Order
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
-     * @ORM\JoinTable(name="order_products",
-     *      joinColumns={@ORM\JoinColumn(name="order_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OrderProduct", mappedBy="order")
      */
-    private $products;
+    private $orderedProducts;
 
     /**
      * @var User
@@ -100,7 +96,7 @@ class Order
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->orderedProducts = new ArrayCollection();
     }
 
     /**
@@ -146,17 +142,17 @@ class Order
     /**
      * @return ArrayCollection
      */
-    public function getProducts()
+    public function getOrderedProducts()
     {
-        return $this->products;
+        return $this->orderedProducts;
     }
 
     /**
-     * @param ArrayCollection $products
+     * @param ArrayCollection $orderedProducts
      */
-    public function setProducts(ArrayCollection $products)
+    public function setOrderedProducts($orderedProducts)
     {
-        $this->products = $products;
+        $this->orderedProducts = $orderedProducts;
     }
 
     /**
@@ -237,5 +233,19 @@ class Order
     public function setCountry($country)
     {
         $this->country = $country;
+    }
+
+    /**
+     * Get the total order cost in cents
+     *
+     * @return int
+     */
+    public function getTotalCost()
+    {
+        $total = 0;
+        foreach ($this->orderedProducts as $orderedProduct) {
+            $total += $orderedProduct->getProduct()->getPrice() * $orderedProduct->getAmount();
+        }
+        return $total;
     }
 }
