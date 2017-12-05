@@ -14,11 +14,6 @@ class AddAdminUser
     /**
      * @var string
      */
-    private $username;
-
-    /**
-     * @var string
-     */
     private $password;
 
     /**
@@ -26,19 +21,15 @@ class AddAdminUser
      */
     private $email;
 
-    public function __construct($username, $password, $email)
-    {
-        $this->username = $username;
-        $this->password = $password;
-        $this->email = $email;
-    }
-
     /**
-     * @return string
+     * AddAdminUser constructor.
+     * @param $email
+     * @param $password
      */
-    public function getUsername()
+    public function __construct($email, $password)
     {
-        return $this->username;
+        $this->email = $email;
+        $this->password = $password;
     }
 
     /**

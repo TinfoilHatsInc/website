@@ -83,8 +83,13 @@ class ShoppingCartService
     public function buildModelFromSession()
     {
         $this->session->start();
-        $productRepository = $this->em->getRepository(Product::class);
+
         $cart = new Cart();
+        if(!$this->session->has('cart')) {
+            return $cart;
+        }
+
+        $productRepository = $this->em->getRepository(Product::class);
         $cartFromSession = $this->session->get('cart');
         foreach ($cartFromSession as $item) {
             $product = $productRepository->find($item['productId']);

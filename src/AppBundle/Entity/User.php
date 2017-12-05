@@ -32,14 +32,6 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
      */
@@ -56,8 +48,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $phoneNumber;
 
@@ -124,7 +115,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Collection
      *
-     * @ManyToMany(targetEntity="AppBundle\Entity\Role")
+     * @ManyToMany(targetEntity="AppBundle\Entity\Role", cascade={"remove"})
      * @JoinTable(name="user_role",
      *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}
@@ -156,21 +147,7 @@ class User implements UserInterface, \Serializable
      */
     public function getUsername()
     {
-        return $this->username;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     *
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
+        return $this->email;
     }
 
     /**
@@ -321,7 +298,7 @@ class User implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
-
+        $this->username = $email;
         return $this;
     }
 
@@ -463,7 +440,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
         ));
     }
@@ -481,7 +458,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
             ) = unserialize($serialized);
     }

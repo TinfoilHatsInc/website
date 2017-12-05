@@ -19,9 +19,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="`order`")
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
  */
 class Order
 {
+    use Timestampable;
+
     /**
      * @var int
      *

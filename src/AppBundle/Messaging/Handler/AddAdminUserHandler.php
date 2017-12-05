@@ -36,7 +36,7 @@ class AddAdminUserHandler
     public function handle(AddAdminUser $addAdminUser)
     {
         $user = new User();
-        $user->setUsername($addAdminUser->getUsername());
+        $user->setEmail($addAdminUser->getEmail());
         $user->setPassword($this->encoder->encodePassword($user, $addAdminUser->getPassword()));
         $user->eraseCredentials();
         $user->setEmail($addAdminUser->getEmail());

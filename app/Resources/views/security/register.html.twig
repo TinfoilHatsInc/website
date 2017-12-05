@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% include ':includes:menu-default.html.twig' %}
+
+    <header class="masthead">
+        <div class="overlay-small">
+            <div class="container">
+                <h1 class="display-1 text-white">Register</h1>
+            </div>
+        </div>
+    </header>
+    <hr noshade>
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 order-1">
+                    <div class="p-5">
+                        <h2 class="display-5">Register new account</h2>
+                        {{ form_start(form) }}
+                            <div class="form-group">
+                                {{ form_label(form.firstName) }}
+                                {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.lastName) }}
+                                {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.email) }}
+                                {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(form.plainPassword) }}
+                            </div>
+                            <div class="form-check">
+                                {#{{ form_label(form.termsAccepted) }}#}
+                                    {{ form_row(form.acceptTerms) }}
+                                    {{ form_widget(form.acceptTerms, { 'attr': {'class': 'form-check-input'} }) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(form.register, { 'attr': {'class': 'btn btn-success'} }) }}
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include ':includes:footer.html.twig' %}
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+{% endblock %}

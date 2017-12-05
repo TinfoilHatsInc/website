@@ -8,16 +8,16 @@ home:
     defaults:
       _controller:   FrameworkBundle:Template:template
       template:     :static:index.html.twig
-      maxAge:       86400
-      sharedAge:    86400
+      maxAge:       0
+      sharedAge:    0
 
 about:
     path: /about
     defaults:
       _controller:   FrameworkBundle:Template:template
       template:     :static:about.html.twig
-      maxAge:       86400
-      sharedAge:    86400
+      maxAge:       0
+      sharedAge:    0
 
 logout:
     path: /logout

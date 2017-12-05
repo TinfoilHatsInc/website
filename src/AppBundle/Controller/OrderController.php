@@ -27,6 +27,12 @@ class OrderController extends Controller
      */
     public function createOrderAction(Request $request)
     {
+        if(!$this->isGranted('ROLE_CUSTOMER')) {
+            return $this->redirectToRoute('register', [
+                'c' => true
+            ]);
+        }
+
         $order = new Order();
         /** @var User $user */
         $user = $this->getUser();

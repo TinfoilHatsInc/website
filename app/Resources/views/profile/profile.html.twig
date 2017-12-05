@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+    <!-- Navigation -->
+    {% include ':includes:menu-default.html.twig' %}
+
+    <header class="masthead">
+        <div class="overlay-small">
+            <div class="container">
+                <h1 class="display-1 text-white">My Profile</h1>
+            </div>
+        </div>
+    </header>
+    <hr noshade>
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 order-1">
+                    <div class="p-5">
+                        <h2 class="display-5">Personal Details</h2>
+                        <address>
+                            <strong>{{ user.firstName }} {{  user.lastName }}</strong><br>
+                            {{ user.country.name|capitalize }}<br>
+                            {{ user.city }}, {{ user.zipcode }}<br>
+                            {{ user.phoneNumber }}
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr noshade>
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 order-1">
+                    <div class="p-5">
+                        <h2 class="display-5">Most Recent Order</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include ':includes:footer.html.twig' %}
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+{% endblock %}
