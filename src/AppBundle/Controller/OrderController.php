@@ -30,8 +30,8 @@ class OrderController extends Controller
         $order = new Order();
         /** @var User $user */
         $user = $this->getUser();
+        $order->setUser($this->getDoctrine()->getRepository(User::class)->find(1));
         if($this->isGranted('ROLE_USER')) {
-            $order->setUser($this->getDoctrine()->getRepository(User::class)->find(1));
             $order->setCity($user->getCity());
             $order->setAddress($user->getAddress());
             $order->setZipcode($user->getZipcode());
@@ -47,6 +47,7 @@ class OrderController extends Controller
 
             $mollieService = $this->get('tinfoil.service.mollie');
             $redirectUrl = $mollieService->createPayment($order);
+            $this->getDoctrine()->getManager()->flush();
             return $this->redirect($redirectUrl);
         }
 

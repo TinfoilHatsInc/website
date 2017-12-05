@@ -94,6 +94,15 @@ class ShoppingCartService
     }
 
     /**
+     * Clear cart
+     */
+    public function clearCart()
+    {
+        $this->session->start();
+        $this->session->set('cart', []);
+    }
+
+    /**
      * @param Cart $cart
      * @return int
      */

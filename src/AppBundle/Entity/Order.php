@@ -87,7 +87,8 @@ class Order
     /**
      * @var Country
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Country")
+     * FINISH THIS!!!!!!!!!!!!!!!!!!!!!
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Country")
      * @JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
     private $country;

@@ -62,7 +62,7 @@ class MollieService
      *
      * @return null|string payment url
      */
-    public function createPayment(Order $order)
+    public function createPayment($order)
     {
         $cart = $this->shoppingCartService->buildModelFromSession();
 
