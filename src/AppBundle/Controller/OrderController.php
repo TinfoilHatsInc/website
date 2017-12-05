@@ -27,6 +27,7 @@ class OrderController extends Controller
      */
     public function createOrderAction(Request $request)
     {
+        //TODO find better way to redirect user
         if(!$this->isGranted('ROLE_CUSTOMER')) {
             return $this->redirectToRoute('register', [
                 'c' => true
