@@ -77,7 +77,15 @@ class Order
      * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
      */
-    private $address;
+    private $street;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $houseNumber;
 
     /**
      * @var string
@@ -191,17 +199,33 @@ class Order
     /**
      * @return string
      */
-    public function getAddress()
+    public function getStreet()
     {
-        return $this->address;
+        return $this->street;
     }
 
     /**
-     * @param string $address
+     * @param string $street
      */
-    public function setAddress($address)
+    public function setStreet($street)
     {
-        $this->address = $address;
+        $this->street = $street;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHouseNumber()
+    {
+        return $this->houseNumber;
+    }
+
+    /**
+     * @param string $houseNumber
+     */
+    public function setHouseNumber($houseNumber)
+    {
+        $this->houseNumber = $houseNumber;
     }
 
     /**

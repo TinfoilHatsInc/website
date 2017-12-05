@@ -53,33 +53,12 @@ class User implements UserInterface, \Serializable
     private $phoneNumber;
 
     /**
-     * @var string
+     * @var Address
      *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address")
+     * @JoinColumn(name="address_id", referencedColumnName="id")
      */
     private $address;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $zipcode;
-
-    /**
-     * @var Country
-     *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Country")
-     * @JoinColumn(name="country_id", referencedColumnName="id")
-     */
-    private $country;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
@@ -199,23 +178,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @return string
+     * @return Address
      */
     public function getAddress()
     {
@@ -223,43 +186,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $address
+     * @param Address $address
      */
-    public function setAddress($address)
+    public function setAddress(Address $address)
     {
         $this->address = $address;
-    }
-
-    /**
-     * @return string
-     */
-    public function getZipcode()
-    {
-        return $this->zipcode;
-    }
-
-    /**
-     * @param string $zipcode
-     */
-    public function setZipcode($zipcode)
-    {
-        $this->zipcode = $zipcode;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param mixed $country
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
     }
 
     /**

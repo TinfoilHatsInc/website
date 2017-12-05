@@ -37,11 +37,12 @@ class OrderController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         $order->setUser($this->getDoctrine()->getRepository(User::class)->find(1));
-        if($this->isGranted('ROLE_USER')) {
-            $order->setCity($user->getCity());
-            $order->setAddress($user->getAddress());
-            $order->setZipcode($user->getZipcode());
-            $order->setCountry($user->getCountry());
+        if($user->getAddress()) {
+            $order->setCity($user->getAddress()->getCity());
+            $order->setStreet($user->getAddress()->getStreet());
+            $order->setHouseNumber($user->getAddress()->getHouseNumber());
+            $order->setZipcode($user->getAddress()->getZipcode());
+            $order->setCountry($user->getAddress()->getCountry());
         }
 
         $form = $this->createForm(OrderType::class, $order);

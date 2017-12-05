@@ -19,11 +19,16 @@
             <div class="row align-items-center">
                 <div class="col-md-8 order-1">
                     <div class="p-5">
-                        <h2 class="display-5">Personal Details</h2>
+                        <h2 class="display-5">Shipping Details</h2>
                         <address>
                             <strong>{{ user.firstName }} {{  user.lastName }}</strong><br>
-                            {{ user.country.name|capitalize }}<br>
-                            {{ user.city }}, {{ user.zipcode }}<br>
+                            {% if user.address %}
+                                {{ user.address.country.name|capitalize }}<br>
+                                {{ user.address.street }} {{ user.address.houseNumber }}<br>
+                                {{ user.address.city }}, {{ user.address.zipcode }}<br>
+                            {% else %}
+                                <a href="#" class="btn btn-success">Set your shipping details</a>
+                            {% endif %}
                             {{ user.phoneNumber }}
                         </address>
                     </div>
