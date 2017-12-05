@@ -10,7 +10,6 @@ namespace AppBundle\Model;
 
 
 use AppBundle\Entity\Product;
-use AppBundle\Services\ShoppingCartService;
 
 class Cart
 {
@@ -33,13 +32,5 @@ class Cart
             'product' => $product,
             'amount' => $amount
         ];
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotalCost()
-    {
-        return ShoppingCartService::calculateCartTotal($this);
     }
 }
