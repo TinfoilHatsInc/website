@@ -46,6 +46,7 @@ trait Timestampable
     public function setCreatedAt()
     {
         $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**

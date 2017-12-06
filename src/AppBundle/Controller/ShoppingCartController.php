@@ -20,6 +20,7 @@ class ShoppingCartController extends Controller
 {
     /**
      * @Route(path="/", name="shopping_cart")
+     * @Method({"GET"})
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -40,7 +41,6 @@ class ShoppingCartController extends Controller
      */
     public function addToCartAction(Request $request)
     {
-//        dump($request->getContent());die;
         if(!$this->isCsrfTokenValid('add_to_cart_token', $request->get('csrf_token'))) {
             return new Response("Invalid CSRF", Response::HTTP_BAD_REQUEST);
         }
@@ -59,6 +59,7 @@ class ShoppingCartController extends Controller
 
     /**
      * @Route(path="/remove", name="shopping_cart_remove")
+     * @Method({"POST"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -72,7 +73,8 @@ class ShoppingCartController extends Controller
     }
 
     /**
-     * @Route(path="update", name="shopping_cart_update")
+     * @Route(path="/update", name="shopping_cart_update")
+     * @Method({"POST"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -83,6 +85,23 @@ class ShoppingCartController extends Controller
         $product = $this->getDoctrine()->getManager()->getRepository(Product::class)->find($product);
         $amount = $request->get('amount');
         $this->get('tinfoil.service.cart')->updateAmount($product, $amount);
+        return $this->redirectToRoute('shopping_cart');
+    }
+
+    /**
+     * @Route(path="/clear", name="shopping_cart_clear")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function clearCartAction(Request $request)
+    {
+        if(!$this->isCsrfTokenValid('clear_cart_token', $request->get('csrf_token'))) {
+            return new Response("Invalid CSRF token", Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->get('tinfoil.service.cart')->clearCart();
         return $this->redirectToRoute('shopping_cart');
     }
 }

@@ -27,6 +27,11 @@
                             <a class="nav-link" href="#">Customer Portal</a>
                         </li>
                     {% endif %}
+                    <li class="nav-item">
+                        <a href="{{ path('shopping_cart') }}" class="nav-link">
+                            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user" aria-hidden="true"></i>
@@ -38,6 +43,11 @@
                         </div>
                     </li>
                 {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('shopping_cart') }}" class="nav-link">
+                            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ path('login') }}" class="nav-link">Login</a>
                     </li>

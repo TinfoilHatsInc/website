@@ -40,7 +40,7 @@ class RegisterController extends Controller
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
-            if($request->get('c') == 1) {
+            if($this->get('session')->get('in_order')) {
                 return $this->redirectToRoute('create_order');
             }
             return $this->redirectToRoute('home');

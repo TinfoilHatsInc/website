@@ -29,15 +29,14 @@ class OrderController extends Controller
     {
         //TODO find better way to redirect user
         if(!$this->isGranted('ROLE_CUSTOMER')) {
-            return $this->redirectToRoute('register', [
-                'c' => true
-            ]);
+            $this->get('session')->set('in_order', true);
+            return $this->redirectToRoute('register');
         }
 
         $order = new Order();
         /** @var User $user */
         $user = $this->getUser();
-        $order->setUser($this->getDoctrine()->getRepository(User::class)->find(1));
+        $order->setUser($user);
         if($user->getAddress()) {
             $order->setCity($user->getAddress()->getCity());
             $order->setStreet($user->getAddress()->getStreet());

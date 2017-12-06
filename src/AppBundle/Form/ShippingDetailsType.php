@@ -2,8 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Country;
-use AppBundle\Entity\Order;
+use AppBundle\Entity\Address;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -12,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderType extends AbstractType
+class ShippingDetailsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -35,19 +34,19 @@ class OrderType extends AbstractType
                     return ucfirst($country->getName());
                 }
             ])
-            ->add('complete', SubmitType::class);
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Order::class,
+            'data_class' => Address::class,
             'allow_extra_fields' => false
         ]);
     }
 
     public function getBlockPrefix()
     {
-        return 'app_bundle_order_type';
+        return 'app_bundle_shipping_details_type';
     }
 }
