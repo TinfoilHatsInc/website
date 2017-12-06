@@ -11,7 +11,7 @@ namespace AppBundle\Twig;
 use AppBundle\Model\Cart;
 use AppBundle\Services\ShoppingCartService;
 
-class CartTotal extends \Twig_Extension
+class OrderTotal extends \Twig_Extension
 {
     public function getFilters()
     {

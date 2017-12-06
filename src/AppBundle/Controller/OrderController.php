@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\User;
 use AppBundle\Form\OrderType;
+use AppBundle\Security\OrderVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,7 +28,6 @@ class OrderController extends Controller
      */
     public function createOrderAction(Request $request)
     {
-        //TODO find better way to redirect user
         if(!$this->isGranted('ROLE_CUSTOMER')) {
             $this->get('session')->set('in_order', true);
             return $this->redirectToRoute('register');
@@ -65,12 +65,15 @@ class OrderController extends Controller
 
     /**
      * @Route(path="/{id}", name="show_order")
+     * @Method({"GET"})
      *
      * @param Order $order
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showOrderAction(Order $order)
     {
+        $this->denyAccessUnlessGranted(OrderVoter::VIEW, $order);
+
         return $this->render(':order:payment_complete.html.twig', [
             'order' => $order
         ]);

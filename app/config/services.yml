@@ -52,8 +52,14 @@ services:
         public: true
         arguments: ['@session', '@doctrine.orm.entity_manager']
 
-    tinfoil.twig.cart:
-        class: AppBundle\Twig\CartTotal
+    tinfoil.twig.order:
+        class: AppBundle\Twig\OrderTotal
         public: true
         tags:
           - twig.extension
+
+    tinfoil.voter.order:
+        class: AppBundle\Security\OrderVoter
+        public: true
+        tags:
+          - security.voter

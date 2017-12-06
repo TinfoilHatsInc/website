@@ -24,7 +24,9 @@ class AddAdminUserCommand extends ContainerAwareCommand
             ->setName('tinfoil:createadmin')
             ->setDescription('Creates a new admin user.')
             ->addArgument('email', InputArgument::REQUIRED, 'Email')
-            ->addArgument('password', InputArgument::REQUIRED, 'Password');
+            ->addArgument('password', InputArgument::REQUIRED, 'Password')
+            ->addArgument('firstName', InputArgument::REQUIRED, 'Firstname')
+            ->addArgument('lastName', InputArgument::REQUIRED, 'Lastname');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -32,7 +34,9 @@ class AddAdminUserCommand extends ContainerAwareCommand
         $output->writeln("Creating new admin user");
         $addAdminuser = new AddAdminUser(
                             $input->getArgument('email'),
-                            $input->getArgument('password'));
+                            $input->getArgument('password'),
+                            $input->getArgument('firstName'),
+                            $input->getArgument('lastName'));
         $this->getContainer()->get('command_bus')->handle($addAdminuser);
     }
 }

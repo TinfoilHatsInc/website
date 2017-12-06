@@ -61,7 +61,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                            <strong>Total: &euro;</strong> {{ cart|calculateTotal / 100 }}
+                            <strong>Total: &euro;</strong> {{ order|calculateTotal / 100 }}
                         {% else %}
                             <p>No orders yet</p>
                             <a href="{{ path('products') }}" class="btn btn-primary btn-sm">Place your first order</a>

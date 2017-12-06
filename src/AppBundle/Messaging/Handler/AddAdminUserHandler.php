@@ -39,7 +39,8 @@ class AddAdminUserHandler
         $user->setEmail($addAdminUser->getEmail());
         $user->setPassword($this->encoder->encodePassword($user, $addAdminUser->getPassword()));
         $user->eraseCredentials();
-        $user->setEmail($addAdminUser->getEmail());
+        $user->setFirstName($addAdminUser->getFirstName());
+        $user->setLastName($addAdminUser->getLastName());
         $user->addRole($this->getAdminRole());
         $this->em->persist($user);
         $this->em->flush();
