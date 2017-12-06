@@ -27,10 +27,10 @@ class Order
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
+     * //TODO reset to AI ID
+     * @ORM\Column(type="guid")
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 
@@ -102,6 +102,13 @@ class Order
      * @JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
     private $country;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $phoneNumber;
 
     public function __construct()
     {
@@ -261,16 +268,18 @@ class Order
     }
 
     /**
-     * Get the total order cost in cents
-     *
      * @return int
      */
-    public function getTotalCost()
+    public function getPhoneNumber()
     {
-        $total = 0;
-        foreach ($this->orderedProducts as $orderedProduct) {
-            $total += $orderedProduct->getProduct()->getPrice() * $orderedProduct->getAmount();
-        }
-        return $total;
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param int $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
     }
 }

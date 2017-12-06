@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block body %}
+    <!-- Navigation -->
+    {% include ':includes:menu-default.html.twig' %}
+
+    <header class="masthead">
+        <div class="overlay-small">
+            <div class="container">
+                <h1 class="display-1 text-white">My Orders</h1>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 order-1">
+                    <div class="p-5">
+                        <h2 class="display-5">All Orders</h2>
+                        {% if orders|length %}
+                            {% for order in orders %}
+                                <table width="100%" class="table table-striped table-hover">
+                                    <tbody>
+                                    {% for orderedProduct in order.orderedProducts %}
+                                        <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}" style="cursor: pointer">
+                                            <td>
+                                                <img id="product-img" src="{{ vich_uploader_asset(orderedProduct.product, 'imageFile') }}" style="width: 120px" class="img-fluid" alt="{{ orderedProduct.product.name }}">
+                                            </td>
+                                            <td>{{ orderedProduct.product.name }}</td>
+                                            <td>&euro; {{ orderedProduct.product.price / 100 }}</td>
+                                            <td>&num; {{ orderedProduct.amount }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <strong>Total: &euro;</strong> {{ order|calculateTotal / 100 }}
+                                <strong>Status: </strong> {% if order.paymentStatus %}{{ order.paymentStatus }}{% else %}N/A{% endif %}
+                                <a href="{{ path('show_order', {id: order.id}) }}" class="btn btn-sm btn-primary">Show</a>
+                                <hr noshade>
+                            {% endfor %}
+                        {% else %}
+                            <p>No orders yet</p>
+                            <a href="{{ path('products') }}" class="btn btn-primary btn-sm">Place your first order</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include ':includes:footer.html.twig' %}
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+{% endblock %}

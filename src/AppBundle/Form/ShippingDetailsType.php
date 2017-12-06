@@ -34,6 +34,9 @@ class ShippingDetailsType extends AbstractType
                     return ucfirst($country->getName());
                 }
             ])
+            ->add('phoneNumber', TextType::class, [
+                'required' => false
+            ])
             ->add('save', SubmitType::class);
     }
 

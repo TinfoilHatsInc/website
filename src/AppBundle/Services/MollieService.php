@@ -95,7 +95,7 @@ class MollieService
     private function createOrderDescription(Order $order)
     {
         //TODO sanitze
-        return sprintf("Order for user: %s", $order->getUser()->getLastName());
+        return sprintf("Order #%s", $order->getId());
     }
 
     /**

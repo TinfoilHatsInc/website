@@ -8,26 +8,26 @@
 
 namespace AppBundle\Twig;
 
-use AppBundle\Model\Cart;
-use AppBundle\Services\ShoppingCartService;
+use AppBundle\Entity\Order;
+use AppBundle\Services\OrderService;
 
 class OrderTotal extends \Twig_Extension
 {
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('calculateTotal', [$this, 'calculateTotal'])
+            new \Twig_SimpleFilter('calculateOrderTotal', [$this, 'calculateOrderTotal'])
         ];
     }
 
     /**
-     * Calculate Cart total
+     * Calculate Order total
      *
-     * @param Cart $cart
+     * @param Order $order
      * @return int
      */
-    public function calculateTotal(Cart $cart)
+    public function calculateOrderTotal(Order $order)
     {
-        return ShoppingCartService::calculateCartTotal($cart);
+        return OrderService::calculateOrderTotal($order);
     }
 }

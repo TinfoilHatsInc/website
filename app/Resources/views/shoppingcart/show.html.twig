@@ -39,7 +39,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                            <strong>Total: &euro;</strong> {{ cart|calculateTotal / 100 }}
+                            <strong>Total: &euro;</strong> {{ cart|calculateCartTotal / 100 }}
                             <div style="float: right">
                                 <form action="{{ path('create_order') }}" method="post">
                                     <input hidden name="create_order_token" value="{{ csrf_token('create_order_token') }}" />

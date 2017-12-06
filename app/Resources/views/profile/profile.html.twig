@@ -21,11 +21,11 @@
                     <div class="p-5">
                         <h2 class="display-5">Details</h2>
                         <strong>{{ user.firstName }} {{  user.lastName }}</strong><br>
-                        &plus;{{ user.address.country.phoneCode }}{{ user.phoneNumber }}<br>
                         <br>
                         <strong>Shipping Details</strong><br>
                         <address>
                             {% if user.address %}
+                                &plus;{{ user.address.country.phoneCode }}{{ user.phoneNumber }}<br>
                                 {{ user.address.country.name|capitalize }}<br>
                                 {{ user.address.street }} {{ user.address.houseNumber }}<br>
                                 {{ user.address.city }}, {{ user.address.zipcode }}<br>
@@ -62,6 +62,8 @@
                                 </tbody>
                             </table>
                             <strong>Total: &euro;</strong> {{ order|calculateTotal / 100 }}
+                            <strong>Status: </strong> {% if order.paymentStatus %}{{ order.paymentStatus }}{% else %}N/A{% endif %}<br>
+                            <a href="{{ path('my_profile_orders') }}" class="btn btn-primary btn-sm">All orders</a>
                         {% else %}
                             <p>No orders yet</p>
                             <a href="{{ path('products') }}" class="btn btn-primary btn-sm">Place your first order</a>

@@ -46,13 +46,6 @@ class User implements UserInterface, \Serializable
     private $lastName;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $phoneNumber;
-
-    /**
      * @var Address
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address")
@@ -119,7 +112,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Returns the username used to authenticate the user.
+     * Returns the username (email) used to authenticate the user.
      *
      * @return string The username
      */
@@ -158,22 +151,6 @@ class User implements UserInterface, \Serializable
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * @param int $phoneNumber
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
     }
 
     /**
@@ -228,7 +205,6 @@ class User implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
-        $this->username = $email;
         return $this;
     }
 

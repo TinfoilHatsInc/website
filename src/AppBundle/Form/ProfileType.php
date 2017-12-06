@@ -21,9 +21,6 @@ class ProfileType extends AbstractType
             ->add('lastName', TextType::class, [
                 'required' => true
             ])
-            ->add('phoneNumber', TextType::class, [
-                'required' => false
-            ])
             ->add('email', EmailType::class)
             ->add('save', SubmitType::class);
     }

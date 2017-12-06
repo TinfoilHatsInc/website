@@ -74,7 +74,7 @@ class OrderController extends Controller
     {
         $this->denyAccessUnlessGranted(OrderVoter::VIEW, $order);
 
-        return $this->render(':order:payment_complete.html.twig', [
+        return $this->render(':order:show.html.twig', [
             'order' => $order
         ]);
     }

@@ -35,9 +35,32 @@ class ProfileController extends Controller
             ['user' => $user],
             ['createdAt' => 'DESC'],
             ['limit' => 1]);
+        $order = reset($order);
+
         return $this->render('profile/profile.html.twig', [
             'user' => $user,
             'order' => $order
+        ]);
+    }
+
+    /**
+     * @Route(path="/profile/orders", name="my_profile_orders")
+     * @Method({"GET"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showOrdersAction()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $orders = $this->getDoctrine()->getRepository(Order::class)->findBy([
+            'user' => $user
+        ], [
+            'updatedAt' => 'DESC'
+        ]);
+
+        return $this->render(':profile:orders.html.twig', [
+            'orders' => $orders
         ]);
     }
 

@@ -71,6 +71,13 @@ class Address
     private $houseNumber;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="phone_number", type="integer", nullable=true)
+     */
+    private $phoneNumber;
+
+    /**
      * @return int
      */
     public function getId()
@@ -156,5 +163,21 @@ class Address
     public function setHouseNumber($houseNumber)
     {
         $this->houseNumber = $houseNumber;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param integer $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
     }
 }
