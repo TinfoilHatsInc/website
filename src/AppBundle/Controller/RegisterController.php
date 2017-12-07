@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RegisterController extends Controller
@@ -46,7 +47,14 @@ class RegisterController extends Controller
                 return $this->redirectToRoute('my_profile');
             }
 
-            return $this->redirect($request->get('_target_path')); //TODO check if valid URL
+            //Check target path
+            $targetPath = $request->get('_target_path');
+            $baseUrl = $this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_URL);
+            //Base found at first position
+            if(strpos($targetPath, $baseUrl) !== 0) {
+                return $this->redirectToRoute('my_profile');
+            }
+            return $this->redirect($request->get('_target_path'));
         }
 
         return $this->render(':security:register.html.twig', [
