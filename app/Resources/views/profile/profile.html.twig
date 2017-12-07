@@ -25,7 +25,7 @@
                         <strong>Shipping Details</strong><br>
                         <address>
                             {% if user.address %}
-                                &plus;{{ user.address.country.phoneCode }}{{ user.phoneNumber }}<br>
+                                &plus;{{ user.address.country.phoneCode }}{{ user.address.phoneNumber }}<br>
                                 {{ user.address.country.name|capitalize }}<br>
                                 {{ user.address.street }} {{ user.address.houseNumber }}<br>
                                 {{ user.address.city }}, {{ user.address.zipcode }}<br>
@@ -61,7 +61,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                            <strong>Total: &euro;</strong> {{ order|calculateTotal / 100 }}
+                            <strong>Total: &euro;</strong> {{ order|calculateOrderTotal / 100 }}
                             <strong>Status: </strong> {% if order.paymentStatus %}{{ order.paymentStatus }}{% else %}N/A{% endif %}<br>
                             <a href="{{ path('my_profile_orders') }}" class="btn btn-primary btn-sm">All orders</a>
                         {% else %}

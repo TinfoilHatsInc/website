@@ -27,10 +27,10 @@ class Order
 
     /**
      * @var int
-     * //TODO reset to AI ID
-     * @ORM\Column(type="guid")
+     *
+     * @ORM\Column(type="integer")
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 

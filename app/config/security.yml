@@ -26,9 +26,8 @@ security:
                 login_path: login
                 check_path: login
                 csrf_token_generator: security.csrf.token_manager
-                always_use_default_target_path: false
-                default_target_path: /
                 username_parameter: _email
+                use_referer: true
             provider: db_user_provider
             logout:
                 path: /logout

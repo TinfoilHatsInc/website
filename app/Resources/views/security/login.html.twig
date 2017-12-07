@@ -31,6 +31,7 @@
                                         <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                     </label>
                                 </div>
+                                <input type="hidden" name="_target_path" value="{{ referer() }}" />
                                 <input type="hidden" name="_csrf_token"
                                        value="{{ csrf_token('authenticate') }}"
                                 >
@@ -42,7 +43,7 @@
                 <div class="col-md-3 order-2">
                     <div class="p-5">
                         <p>Don't have an account?</p>
-                        <a href="{{ path('register') }}" class="btn btn-primary">Register</a>
+                        <a href="{{ path('register', {_target_path: referer()}) }}" class="btn btn-primary">Register</a>
                     </div>
                 </div>
             </div>

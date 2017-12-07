@@ -8,6 +8,7 @@ use AppBundle\Form\OrderType;
 use AppBundle\Security\OrderVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,16 +23,17 @@ class OrderController extends Controller
     /**
      * @Route(path="/", name="create_order")
      * @Method({"POST", "GET"})
+     * @Security("has_role('ROLE_CUSTOMER')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createOrderAction(Request $request)
     {
-        if(!$this->isGranted('ROLE_CUSTOMER')) {
-            $this->get('session')->set('in_order', true);
-            return $this->redirectToRoute('register');
-        }
+//        if(!$this->isGranted('ROLE_CUSTOMER')) {
+//            $this->get('session')->set('in_order', true);
+//            return $this->redirectToRoute('login');
+//        }
 
         $order = new Order();
         /** @var User $user */
@@ -66,6 +68,7 @@ class OrderController extends Controller
     /**
      * @Route(path="/{id}", name="show_order")
      * @Method({"GET"})
+     * @Security("has_role('ROLE_CUSTOMER')")
      *
      * @param Order $order
      * @return \Symfony\Component\HttpFoundation\Response

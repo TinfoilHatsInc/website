@@ -40,10 +40,13 @@ class RegisterController extends Controller
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
-            if($this->get('session')->get('in_order')) {
-                return $this->redirectToRoute('create_order');
+
+            $targetPath = $request->get('_target_path');
+            if(!$targetPath) {
+                return $this->redirectToRoute('my_profile');
             }
-            return $this->redirectToRoute('home');
+
+            return $this->redirect($request->get('_target_path')); //TODO check if valid URL
         }
 
         return $this->render(':security:register.html.twig', [

@@ -58,6 +58,13 @@ services:
         tags:
           - twig.extension
 
+    tinfoil.twig.referer:
+        class: AppBundle\Twig\Referer
+        public: true
+        arguments: ['@request_stack']
+        tags:
+          - twig.extension
+
     tinfoil.voter.order:
         class: AppBundle\Security\OrderVoter
         public: true
