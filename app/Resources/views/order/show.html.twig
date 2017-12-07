@@ -19,9 +19,6 @@
             <div class="row align-items-center">
                 <div class="col-md-8 order-1">
                     <div class="p-5">
-                        <p><strong>Status:</strong> {% if order.paymentStatus %}{{ order.paymentStatus }}{% else %}N/A{% endif %}</p>
-                    </div>
-                    <div class="p-5">
                         <h2 class="display-5">Products</h2>
                         <table width="100%" class="table table-striped table-hover">
                             <tbody>
@@ -37,7 +34,8 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <strong>Total: &euro;</strong> {{ order|calculateOrderTotal / 100 }}
+                        <strong>Total: &euro;</strong> {{ order|calculateOrderTotal / 100 }}<br>
+                        <strong>Status:</strong> {% if order.paymentStatus %}{{ order.paymentStatus }}{% else %}N/A{% endif %}
                     </div>
                     <div class="p-5">
                         <h2 class="display-5">Shipping Details</h2>
