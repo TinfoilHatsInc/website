@@ -103,6 +103,7 @@ class MollieService
      */
     public function processPayment($paymentId)
     {
+        $this->mollieApi->setApiKey($this->apiKey);
         $molliePayment = $this->mollieApi->payments->get($paymentId);
         $order = $this->em->getRepository(Order::class)->findOneBy([
             'paymentId' => $paymentId
