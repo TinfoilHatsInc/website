@@ -42,18 +42,20 @@ class ShoppingCartController extends Controller
     public function addToCartAction(Request $request)
     {
         if(!$this->isCsrfTokenValid('add_to_cart_token', $request->get('csrf_token'))) {
-            return new Response("Invalid CSRF", Response::HTTP_BAD_REQUEST);
+            return new Response("Invalid CSRF token", Response::HTTP_BAD_REQUEST);
         }
 
         $product = $request->get('product_id');
         $amount = $request->get('amount');
-
-        if(empty($product) || empty($amount)) {
-            return new Response("Specify product and amount", Response::HTTP_BAD_REQUEST);
-        }
-
+        $amount = intval($amount);
         $product = $this->getDoctrine()->getManager()->getRepository(Product::class)->find($product);
-        $this->get('tinfoil.service.cart')->addToCart($product, $amount);
+
+        try {
+            $this->get('tinfoil.service.cart')->addToCart($product, $amount);
+        } catch (\InvalidArgumentException $iE) {
+            dump($iE->getMessage());die;
+            return $this->redirectToRoute('shopping_cart');
+        }
         return $this->redirectToRoute('shopping_cart');
     }
 
@@ -62,10 +64,14 @@ class ShoppingCartController extends Controller
      * @Method({"POST"})
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
     public function removeFromCartAction(Request $request)
     {
+        if(!$this->isCsrfTokenValid('remove_from_cart_token', $request->get('csrf_token'))) {
+            return new Response("Invalid CSRF token", Response::HTTP_BAD_REQUEST);
+        }
+
         $product = $request->get('product_id');
         $product = $this->getDoctrine()->getManager()->getRepository(Product::class)->find($product);
         $this->get('tinfoil.service.cart')->removeFromCart($product);
@@ -77,14 +83,24 @@ class ShoppingCartController extends Controller
      * @Method({"POST"})
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
     public function updateAmountAction(Request $request)
     {
+        if(!$this->isCsrfTokenValid('update_cart_token', $request->get('csrf_token'))) {
+            return new Response("Invalid CSRF token", Response::HTTP_BAD_REQUEST);
+        }
+
         $product = $request->get('product_id');
         $product = $this->getDoctrine()->getManager()->getRepository(Product::class)->find($product);
         $amount = $request->get('amount');
-        $this->get('tinfoil.service.cart')->updateAmount($product, $amount);
+        $amount = intval($amount);
+
+        try {
+            $this->get('tinfoil.service.cart')->updateAmount($product, $amount);
+        } catch (\InvalidArgumentException $iE) {
+            return $this->redirectToRoute('shopping_cart');
+        }
         return $this->redirectToRoute('shopping_cart');
     }
 

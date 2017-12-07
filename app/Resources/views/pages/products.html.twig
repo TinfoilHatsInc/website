@@ -235,9 +235,9 @@
                             <h4 id="product-name" class="card-title">{{ product.name }}ra</h4>
                             <p id="product-description" class="card-text">{{ product.description }}</p>
                             <p id="product-price" class="card-text">Price: &euro;{{ product.price/100 }}</p>
-                            <form action="{{ path('shopping_cart_add') }}" method="post">
+                            <form class="form form-inline" action="{{ path('shopping_cart_add') }}" method="post">
                                 <input hidden name="csrf_token" value="{{ csrf_token('add_to_cart_token') }}" />
-                                <input name="amount" value="1" />
+                                <input class="form-control" name="amount" type="number" value="1" />
                                 <input hidden name="product_id" value="{{ product.id }}" />
                                 <button type="submit" class="btn btn-primary">buy</button>
                             </form>

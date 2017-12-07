@@ -43,6 +43,10 @@ class ShoppingCartService
      */
     public function addToCart(Product $product, $amount)
     {
+        if(!is_int($amount)) {
+            throw new \InvalidArgumentException(sprintf("Amount must be an integer, got type %s", gettype($amount)));
+        }
+
         $this->session->start();
         $currentCart = $this->session->get('cart');
         $currentCart[$product->getId()] = [
@@ -69,6 +73,10 @@ class ShoppingCartService
      */
     public function updateAmount(Product $product, $amount)
     {
+        if(!is_int($amount)) {
+            throw new \InvalidArgumentException(sprintf("Amount must be an integer, got type %s", gettype($amount)));
+        }
+
         $this->session->start();
         $currentCart = $this->session->get('cart');
         $currentCart[$product->getId()]['amount'] = $amount;
