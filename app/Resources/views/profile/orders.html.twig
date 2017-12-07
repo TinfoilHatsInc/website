@@ -36,7 +36,7 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
-                                <strong>Total: &euro;</strong> {{ order|calculateTotal / 100 }}
+                                <strong>Total: &euro;</strong> {{ order|calculateOrderTotal / 100 }}
                                 <strong>Status: </strong> {% if order.paymentStatus %}{{ order.paymentStatus }}{% else %}N/A{% endif %}
                                 <a href="{{ path('show_order', {id: order.id}) }}" class="btn btn-sm btn-primary">Show</a>
                                 <hr noshade>
