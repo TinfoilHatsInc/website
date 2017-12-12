@@ -113,19 +113,4 @@ class SessionShoppingCart implements ShoppingCart
         $this->session->start();
         $this->session->set('cart', []);
     }
-
-    /**
-     * @param Cart $cart
-     * @return int
-     */
-    public static function calculateCartTotal(Cart $cart)
-    {
-        $total = 0;
-        foreach ($cart->getProducts() as $item) {
-            /** @var Product $product */
-            $product = $item['product'];
-            $total += $product->getPrice() * $item['amount'];
-        }
-        return $total;
-    }
 }

@@ -41,9 +41,4 @@ interface ShoppingCart
      * Clear cart
      */
     public function clearCart();
-    /**
-     * @param Cart $cart
-     * @return int
-     */
-    public static function calculateCartTotal(Cart $cart);
 }

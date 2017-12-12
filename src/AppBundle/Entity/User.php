@@ -70,7 +70,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Cart
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Cart", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Cart", mappedBy="user", cascade={"persist", "remove"})
      */
     private $cart;
 

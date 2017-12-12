@@ -43,8 +43,6 @@ class DatabaseShoppingCart implements ShoppingCart
         if(!$cart) {
             $cart = new \AppBundle\Entity\Cart();
             $this->user->setCart($cart);
-            $cart->setUser($this->user);
-            $this->em->persist($cart);
             $this->em->persist($this->user);
         }
         $cartProduct = new CartProduct();
@@ -100,14 +98,5 @@ class DatabaseShoppingCart implements ShoppingCart
     public function clearCart()
     {
         // TODO: Implement clearCart() method.
-    }
-
-    /**
-     * @param Cart $cart
-     * @return int
-     */
-    public static function calculateCartTotal(Cart $cart)
-    {
-        return 0;
     }
 }
