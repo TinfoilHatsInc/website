@@ -31,7 +31,7 @@ class PaymentController extends Controller
             return new Response("Invalid CSRF token", Response::HTTP_BAD_REQUEST);
         }
 
-        $cart = $this->get('tinfoil.service.cart')->buildModelFromSession();
+        $cart = $this->get('tinfoil.service.cart')->getCartModel();
         $mollieService = $this->get('tinfoil.service.mollie');
 
         $productArray = [];

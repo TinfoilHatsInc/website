@@ -48,9 +48,19 @@ services:
         scope: request
 
     tinfoil.service.cart:
-        class: AppBundle\Services\ShoppingCartService
+        class: AppBundle\Services\ShoppingCart\ShoppingCartService
+        public: true
+        arguments: ['@service_container', '@security.token_storage']
+
+    tinfoil.service.session_cart:
+        class: AppBundle\Services\ShoppingCart\SessionShoppingCart
         public: true
         arguments: ['@session', '@doctrine.orm.entity_manager']
+
+    tinfoil.service.db_cart:
+        class: AppBundle\Services\ShoppingCart\DatabaseShoppingCart
+        public: true
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
 
     tinfoil.twig.order:
         class: AppBundle\Twig\OrderTotal

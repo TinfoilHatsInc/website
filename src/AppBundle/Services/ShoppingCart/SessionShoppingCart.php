@@ -2,19 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: matthijs
- * Date: 4-12-17
- * Time: 11:53
+ * Date: 12-12-17
+ * Time: 15:38
  */
 
-namespace AppBundle\Services;
+namespace AppBundle\Services\ShoppingCart;
 
-
-use AppBundle\Entity\Product;
 use AppBundle\Model\Cart;
+use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class ShoppingCartService
+class SessionShoppingCart implements ShoppingCart
 {
     /**
      * @var Session
@@ -27,7 +26,7 @@ class ShoppingCartService
     private $em;
 
     /**
-     * ShoppingCartService constructor.
+     * ShoppingCartSessionService constructor.
      * @param Session $session
      * @param EntityManager $em
      */
@@ -88,7 +87,7 @@ class ShoppingCartService
      *
      * @return Cart
      */
-    public function buildModelFromSession()
+    public function getCartModel()
     {
         $this->session->start();
 

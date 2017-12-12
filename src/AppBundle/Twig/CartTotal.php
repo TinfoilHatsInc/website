@@ -9,7 +9,8 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Model\Cart;
-use AppBundle\Services\ShoppingCartService;
+use AppBundle\Services\ShoppingCart\ShoppingCartService;
+use AppBundle\Services\ShoppingCartSessionService;
 
 class CartTotal extends \Twig_Extension
 {

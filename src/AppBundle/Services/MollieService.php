@@ -33,7 +33,7 @@ class MollieService
     private $router;
 
     /**
-     * @var ShoppingCartService
+     * @var ShoppingCartSessionService
      */
     private $shoppingCartService;
 
@@ -48,7 +48,7 @@ class MollieService
      * @param EntityManager $em
      * @param Router $router
      */
-    public function __construct($apiKey, EntityManager $em, Router $router, ShoppingCartService $shoppingCartService)
+    public function __construct($apiKey, EntityManager $em, Router $router, ShoppingCartSessionService $shoppingCartService)
     {
         $this->mollieApi = new \Mollie_API_Client();
         $this->em = $em;
@@ -64,7 +64,7 @@ class MollieService
      */
     public function createPayment($order)
     {
-        $cart = $this->shoppingCartService->buildModelFromSession();
+        $cart = $this->shoppingCartService->getCartModel();
 
         $productArray = [];
         foreach ($cart->getProducts() as $product) {
@@ -78,7 +78,7 @@ class MollieService
         $order->setOrderedProducts(new ArrayCollection($productArray));
         $this->mollieApi->setApiKey($this->apiKey);
         $molliePayment = $this->mollieApi->payments->create([
-            "amount"    => ShoppingCartService::calculateCartTotal($cart) / 100,
+            "amount"    => ShoppingCartSessionService::calculateCartTotal($cart) / 100,
             "description"   => $this->createOrderDescription($order),
             "redirectUrl"   => $this->router->generate('show_order', ['id' => $order->getId()], Router::ABSOLUTE_URL),
             "webhookUrl"    => $this->router->generate('mollie_webhook', [], Router::ABSOLUTE_URL)
