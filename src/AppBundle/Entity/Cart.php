@@ -7,6 +7,8 @@
  */
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,11 +38,16 @@ class Cart
     private $user;
 
     /**
-     * @var CartProduct
+     * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CartProduct", mappedBy="cart", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CartProduct", mappedBy="cart", cascade={"persist", "remove"})
      */
     private $cartProducts;
+
+    public function __construct()
+    {
+        $this->cartProducts = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -67,7 +74,7 @@ class Cart
     }
 
     /**
-     * @return CartProduct
+     * @return ArrayCollection
      */
     public function getCartProducts()
     {
@@ -75,9 +82,9 @@ class Cart
     }
 
     /**
-     * @param CartProduct $cartProducts
+     * @param ArrayCollection $cartProducts
      */
-    public function setCartProducts($cartProducts)
+    public function setCartProducts(ArrayCollection $cartProducts)
     {
         $this->cartProducts = $cartProducts;
     }

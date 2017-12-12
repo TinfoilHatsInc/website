@@ -11,6 +11,7 @@ namespace AppBundle\Services\ShoppingCart;
 use AppBundle\Model\Cart;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Product;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\CartProduct;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -39,10 +40,12 @@ class DatabaseShoppingCart implements ShoppingCart
      */
     public function addToCart(Product $product, $amount)
     {
+        //TODO check if product already added
         $cart = $this->user->getCart();
         if(!$cart) {
             $cart = new \AppBundle\Entity\Cart();
             $this->user->setCart($cart);
+            $cart->setUser($this->user);
             $this->em->persist($this->user);
         }
         $cartProduct = new CartProduct();
@@ -58,7 +61,14 @@ class DatabaseShoppingCart implements ShoppingCart
      */
     public function removeFromCart(Product $product)
     {
-        // TODO: Implement removeFromCart() method.
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('product', $product));
+        $cartProduct = $this->user->getCart()->getCartProducts()->matching($criteria)->first();
+        if($cartProduct) {
+            $this->user->getCart()->getCartProducts()->removeElement($cartProduct);
+            $this->em->remove($cartProduct);
+            $this->em->flush();
+        }
     }
 
     /**
@@ -67,7 +77,13 @@ class DatabaseShoppingCart implements ShoppingCart
      */
     public function updateAmount(Product $product, $amount)
     {
-        // TODO: Implement updateAmount() method.
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('product', $product));
+        $cartProduct = $this->user->getCart()->getCartProducts()->matching($criteria)->first();
+        if($cartProduct) {
+            $cartProduct->setAmount($amount);
+            $this->em->flush();
+        }
     }
 
     /**
@@ -80,9 +96,13 @@ class DatabaseShoppingCart implements ShoppingCart
         $dbCart = $this->em->getRepository(\AppBundle\Entity\Cart::class)->findOneBy([
             'user' => $this->user
         ]);
+        $cart = new Cart();
+
+        if(!$dbCart) {
+            return $cart;
+        }
 
         $cartProducts = $dbCart->getCartProducts();
-        $cart = new Cart();
 
         /** @var CartProduct $cartProduct */
         foreach ($cartProducts as $cartProduct) {
@@ -97,6 +117,10 @@ class DatabaseShoppingCart implements ShoppingCart
      */
     public function clearCart()
     {
-        // TODO: Implement clearCart() method.
+        $cart = $this->em->getRepository(\AppBundle\Entity\Cart::class  )->findOneBy([
+            'user' => $this->user
+        ]);
+        $this->em->remove($cart);
+        $this->em->flush();
     }
 }
