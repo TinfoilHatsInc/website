@@ -42,6 +42,7 @@ security:
         ROLE_ADMIN: [ROLE_USER]
         ROLE_CUSTOMER: [ROLE_USER]
 
+    # Other access control rules are declared at controller actions
     access_control:
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

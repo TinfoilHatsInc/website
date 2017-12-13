@@ -16,6 +16,10 @@ class LoginController extends Controller
      */
     public function loginAction(Request $request)
     {
+        if($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('home');
+        }
+
         $authUtils = $this->get('security.authentication_utils');
         $error = $authUtils->getLastAuthenticationError();
         $lastUsername = $authUtils->getLastUsername();

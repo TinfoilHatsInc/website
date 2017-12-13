@@ -68,6 +68,13 @@ class User implements UserInterface, \Serializable
     private $orders;
 
     /**
+     * @var Cart
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Cart", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $cart;
+
+    /**
      * @var string
      * @Assert\Length(max="4096")
      */
@@ -183,6 +190,22 @@ class User implements UserInterface, \Serializable
     public function setOrders($orders)
     {
         $this->orders = $orders;
+    }
+
+    /**
+     * @return Cart
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    /**
+     * @param Cart $cart
+     */
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
     }
 
     /**

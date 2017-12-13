@@ -26,7 +26,7 @@ class ShoppingCartController extends Controller
      */
     public function showCartAction()
     {
-        $cart = $this->get('tinfoil.service.cart')->buildModelFromSession();
+        $cart = $this->get('tinfoil.service.cart')->getCartModel();
         return $this->render('shoppingcart/show.html.twig', [
             'cart' => $cart
         ]);
