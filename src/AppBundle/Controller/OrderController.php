@@ -30,11 +30,6 @@ class OrderController extends Controller
      */
     public function createOrderAction(Request $request)
     {
-//        if(!$this->isGranted('ROLE_CUSTOMER')) {
-//            $this->get('session')->set('in_order', true);
-//            return $this->redirectToRoute('login');
-//        }
-
         $order = new Order();
         /** @var User $user */
         $user = $this->getUser();

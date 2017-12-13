@@ -47,6 +47,7 @@ class MollieService
      * @param string $apiKey
      * @param EntityManager $em
      * @param Router $router
+     * @param ShoppingCartService $shoppingCartService
      */
     public function __construct($apiKey, EntityManager $em, Router $router, ShoppingCartService $shoppingCartService)
     {
@@ -62,7 +63,7 @@ class MollieService
      *
      * @return null|string payment url
      */
-    public function createPayment($order)
+    public function createPayment(Order $order)
     {
         $cart = $this->shoppingCartService->buildModelFromSession();
 
