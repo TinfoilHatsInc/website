@@ -16,6 +16,12 @@ interface ShoppingCart
 {
     /**
      * @param Product $product
+     * @return Product|null
+     */
+    public function getItem(Product $product);
+
+    /**
+     * @param Product $product
      * @param $amount
      */
     public function addToCart(Product $product, $amount);

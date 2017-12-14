@@ -36,11 +36,38 @@ class DatabaseShoppingCart implements ShoppingCart
 
     /**
      * @param Product $product
+     * @return array|null
+     */
+    public function getItem(Product $product)
+    {
+        $cart = $this->user->getCart();
+        $cartProduct = $this->em->getRepository(CartProduct::class)->findOneBy([
+            'cart' => $cart,
+            'product' => $product
+        ]);
+
+        if(!$cartProduct) {
+            return [];
+        }
+
+        return [
+            'product' => $cartProduct->getProduct(),
+            'amount' => $cartProduct->getAmount()
+        ];
+    }
+
+    /**
+     * @param Product $product
      * @param $amount
      */
     public function addToCart(Product $product, $amount)
     {
-        //TODO check if product already added
+        if($this->checkIfProductInCart($product)) {
+            $newAmount = $this->getItem($product)['amount'] + $amount;
+            $this->updateAmount($product, $newAmount);
+            return;
+        }
+
         $cart = $this->user->getCart();
         if(!$cart) {
             $cart = new \AppBundle\Entity\Cart();
@@ -77,6 +104,10 @@ class DatabaseShoppingCart implements ShoppingCart
      */
     public function updateAmount(Product $product, $amount)
     {
+        if(!$this->checkIfProductInCart($product)) {
+            $this->addToCart($product, $amount);
+        }
+
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('product', $product));
         $cartProduct = $this->user->getCart()->getCartProducts()->matching($criteria)->first();
@@ -122,5 +153,14 @@ class DatabaseShoppingCart implements ShoppingCart
         ]);
         $this->em->remove($cart);
         $this->em->flush();
+    }
+
+    /**
+     * @param Product $product
+     * @return bool
+     */
+    private function checkIfProductInCart(Product $product)
+    {
+        return $this->getItem($product) != null;
     }
 }

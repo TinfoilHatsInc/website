@@ -11,6 +11,7 @@ namespace AppBundle\Services\ShoppingCart;
 use AppBundle\Model\Cart;
 use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
+use function Sodium\add;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class SessionShoppingCart implements ShoppingCart
@@ -38,10 +39,37 @@ class SessionShoppingCart implements ShoppingCart
 
     /**
      * @param Product $product
+     * @return array|null
+     */
+    public function getItem(Product $product)
+    {
+        $this->session->start();
+        $cart = $this->session->get('cart');
+        if(!$cart) {
+            return [];
+        }
+        if(!isset($cart[$product->getId()])) {
+            return [];
+        }
+        $product = $this->em->getRepository(Product::class)->find($cart['productId']);
+        return [
+            'product' => $product,
+            'amount' => $cart['amount']
+        ];
+    }
+
+    /**
+     * @param Product $product
      * @param $amount
      */
     public function addToCart(Product $product, $amount)
     {
+        if($this->checkIfProductInCart($product)) {
+            $newAmount = $this->getItem($product)['amount'] + $amount;
+            $this->updateAmount($product, $newAmount);
+            return;
+        }
+
         if(!is_int($amount)) {
             throw new \InvalidArgumentException(sprintf("Amount must be an integer, got type %s", gettype($amount)));
         }
@@ -74,6 +102,10 @@ class SessionShoppingCart implements ShoppingCart
     {
         if(!is_int($amount)) {
             throw new \InvalidArgumentException(sprintf("Amount must be an integer, got type %s", gettype($amount)));
+        }
+
+        if(!$this->checkIfProductInCart($product)) {
+            $this->addToCart($product, $amount);
         }
 
         $this->session->start();
@@ -112,5 +144,14 @@ class SessionShoppingCart implements ShoppingCart
     {
         $this->session->start();
         $this->session->set('cart', []);
+    }
+
+    /**
+     * @param Product $product
+     * @return bool
+     */
+    private function checkIfProductInCart(Product $product)
+    {
+        return $this->getItem($product) != null;
     }
 }
