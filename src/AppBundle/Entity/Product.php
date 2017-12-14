@@ -90,7 +90,7 @@ class Product
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feature", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feature", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $features;
 
@@ -273,7 +273,6 @@ class Product
      */
     public function removeFeature(Feature $feature)
     {
-        //TODO implement
         $this->features->removeElement($feature);
     }
 }

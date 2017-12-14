@@ -86,10 +86,23 @@ class ProductController extends Controller
      */
     public function editAction(Request $request, Product $product)
     {
+        $originalFeatures = new ArrayCollection();
+        foreach ($product->getFeatures() as $feature) {
+            $originalFeatures->add($feature);
+        }
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            /** @var Feature $originalFeature */
+            foreach ($originalFeatures as $originalFeature) {
+                if(!$product->getFeatures()->contains($originalFeature)) {
+                    $product->removeFeature($originalFeature);
+                    $originalFeature->setProduct(null);
+                }
+            }
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();

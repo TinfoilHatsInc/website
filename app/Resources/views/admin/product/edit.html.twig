@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Features</label>
-                                <ul style="list-style: none">
+                                <ul style="list-style: none" class="features" data-prototype="{{ form_widget(form.features.vars.prototype)|e('html_attr') }}">
                                     {% for feature in form.features %}
                                         <li>{{ form_widget(feature.name) }}</li>
                                         <li>{{ form_widget(feature.imageFile) }}</li>
@@ -78,4 +78,8 @@
 
     </div>
     <!-- /#wrapper -->
+{% endblock %}
+
+{% block js_bottom %}
+    <script type="text/javascript" src="{{ asset('assets/js/features.js') }}"></script>
 {% endblock %}
