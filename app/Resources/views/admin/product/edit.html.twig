@@ -54,8 +54,10 @@
                                 <label>Features</label>
                                 <ul style="list-style: none" class="features" data-prototype="{{ form_widget(form.features.vars.prototype)|e('html_attr') }}">
                                     {% for feature in form.features %}
-                                        <li>{{ form_widget(feature.name) }}</li>
-                                        <li>{{ form_widget(feature.imageFile) }}</li>
+                                        <li>
+                                            {{ form_widget(feature.name) }}
+                                            {{ form_widget(feature.imageFile) }}
+                                        </li>
                                         <hr>
                                     {% endfor %}
                                 </ul>

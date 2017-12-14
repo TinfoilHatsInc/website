@@ -3,31 +3,31 @@
  */
 var $collectionHolder;
 
-// setup an "add a tag" link
-var $addFeatureLink = $('<a href="#" class="add_feature_link">Add a tag</a>');
-var $newLinkLi = $('<li></li>').append($addFeatureLink);
+// setup an "add a feature" link
+var $addFeatureLink = $('<a href="#" class="add_feature_link">Add a feature</a>');
+var $newLinkLi = $('<div></div>').append($addFeatureLink);
 
 jQuery(document).ready(function() {
-    // Get the ul that holds the collection of tags
+    // Get the ul that holds the collection of features
     $collectionHolder = $('ul.features');
 
-    // add the "add a tag" anchor and li to the tags ul
+    // add the "add a feature" anchor and li to the features ul
     $collectionHolder.append($newLinkLi);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-    // add a delete link to all of the existing tag form li elements
+    // add a delete link to all of the existing feature form li elements
     $collectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
+        addfeatureFormDeleteLink($(this));
     });
 
     $addFeatureLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
-        // add a new tag form (see next code block)
+        // add a new feature form (see next code block)
         addFeatureForm($collectionHolder, $newLinkLi);
     });
 });
@@ -46,11 +46,11 @@ function addFeatureForm($collectionHolder, $newLinkLi) {
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);
 
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li></li>').append(newForm);
+    // Display the form in the page in an li, before the "Add a feature" link li
+    var $newFormLi = $('<li></li>').append(newForm).append('<hr>');
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-feature">x</a>');
+    // $newFormLi.append('<a href="#" class="remove-feature">x</a>');
 
     $newLinkLi.before($newFormLi);
 
@@ -64,18 +64,18 @@ function addFeatureForm($collectionHolder, $newLinkLi) {
     });
 
     // add a delete link to the new form
-    addTagFormDeleteLink($newFormLi);
+    addfeatureFormDeleteLink($newFormLi);
 }
 
-function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">delete this tag</a>');
-    $tagFormLi.append($removeFormA);
+function addfeatureFormDeleteLink($featureFormLi) {
+    var $removeFormA = $('<a href="#">delete this feature</a>');
+    $featureFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
-        // remove the li for the tag form
-        $tagFormLi.remove();
+        // remove the li for the feature form
+        $featureFormLi.remove();
     });
 }
