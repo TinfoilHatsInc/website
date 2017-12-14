@@ -46,10 +46,6 @@ class ProductController extends Controller
     public function addAction(Request $request)
     {
         $product = new Product();
-        $feature = new Feature();
-        $feature->setName('test');
-        $feature->setProduct($product);
-        $product->setFeatures(new ArrayCollection([$feature]));
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 

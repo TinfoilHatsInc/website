@@ -258,4 +258,22 @@ class Product
     {
         $this->features = $features;
     }
+
+    /**
+     * @param Feature $feature
+     */
+    public function addFeature(Feature $feature)
+    {
+        $feature->setProduct($this);
+        $this->features->add($feature);
+    }
+
+    /**
+     * @param Feature $feature
+     */
+    public function removeFeature(Feature $feature)
+    {
+        //TODO implement
+        $this->features->removeElement($feature);
+    }
 }
