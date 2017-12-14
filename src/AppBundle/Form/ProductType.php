@@ -2,8 +2,10 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Feature;
 use AppBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -33,6 +35,13 @@ class ProductType extends AbstractType
                 'allow_delete' => false,
                 'download_link' => true,
                 'label' => 'Product Icon'
+            ])
+            ->add('features', CollectionType::class, [
+                'entry_type' => FeatureType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true
             ])
             ->add('save', SubmitType::class);
     }

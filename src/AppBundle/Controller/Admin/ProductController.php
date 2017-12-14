@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Feature;
 use AppBundle\Entity\Product;
 use AppBundle\Form\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -44,6 +46,10 @@ class ProductController extends Controller
     public function addAction(Request $request)
     {
         $product = new Product();
+        $feature = new Feature();
+        $feature->setName('test');
+        $feature->setProduct($product);
+        $product->setFeatures(new ArrayCollection([$feature]));
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 

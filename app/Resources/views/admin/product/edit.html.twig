@@ -51,6 +51,16 @@
                                 <img id="product-img" src="{{ vich_uploader_asset(product, 'iconFile') }}" class="img-fluid" style="width: 30px" alt="">
                             </div>
                             <div class="form-group">
+                                <label>Features</label>
+                                <ul style="list-style: none">
+                                    {% for feature in form.features %}
+                                        <li>{{ form_widget(feature.name) }}</li>
+                                        <li>{{ form_widget(feature.imageFile) }}</li>
+                                        <hr>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="form-group">
                                 {{ form_widget(form.save, { 'attr': {'class': 'btn btn-success'} }) }}
                             </div>
                             {{ form_end(form) }}

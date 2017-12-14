@@ -26,66 +26,75 @@
     <section>
         <div class="container">
             <div class="d-flex justify-content-center">
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/cctv.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center"  onclick="product1()">
-                        <p class="white-text">Security Camera</p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">                        
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/door.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product2()">
-                        <p class="white-text">Door Sensor</p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/fingerprint.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product3()">
-                        <p class="white-text">Fingerprint Scan<p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/motion.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product4()">
-                        <p class="white-text">IR Sensor</p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/light.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product5()">
-                        <p class="white-text">Light Module</p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/pressure.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product6()">
-                        <p class="white-text">Step-on Sensor</p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/speaker.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product7()">
-                        <p class="white-text">Siren</p>
-                    </div>
-                </div>
-                <div class="view overlay hm-blue-strong">
-                    <div class="p-2"><img src="{{ asset('assets/images/icons/wire.png') }}" height="120" width="120" class="img-fluid"></div>
-                    <div class="mask flex-center" onclick="product8()">
-                        <p class="white-text">Tripwire</p>
-                    </div>
-
-            <div class="row align-items-center">
-                <div class="d-flex justify-content-around">
-                    {% for product in products %}
-                        <div class="view overlay hm-blue-strong">
-                            <div class="p-2"><img src="{{ vich_uploader_asset(product, 'iconFile') }}" height="120" width="120" class="img-fluid"></div>
-                            <div class="mask flex-center"  onclick="product1()">
-                                <p class="white-text">Security Camera</p>
-                            </div>
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/cctv.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center"  onclick="product1()">#}
+                        {#<p class="white-text">Security Camera</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">                        #}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/door.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product2()">#}
+                        {#<p class="white-text">Door Sensor</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/fingerprint.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product3()">#}
+                        {#<p class="white-text">Fingerprint Scan<p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/motion.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product4()">#}
+                        {#<p class="white-text">IR Sensor</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/light.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product5()">#}
+                        {#<p class="white-text">Light Module</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/pressure.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product6()">#}
+                        {#<p class="white-text">Step-on Sensor</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/speaker.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product7()">#}
+                        {#<p class="white-text">Siren</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="view overlay hm-blue-strong">#}
+                    {#<div class="p-2"><img src="{{ asset('assets/images/icons/wire.png') }}" height="120" width="120" class="img-fluid"></div>#}
+                    {#<div class="mask flex-center" onclick="product8()">#}
+                        {#<p class="white-text">Tripwire</p>#}
+                    {#</div>#}
+                {#</div>#}
+                {% for product in products %}
+                    <div class="view overlay hm-blue-strong">
+                        <div class="p-2"><img src="{{ vich_uploader_asset(product, 'iconFile') }}" height="120" width="120" class="img-fluid"></div>
+                        <div class="mask flex-center" onclick="product8()">
+                            <p class="white-text">{{ product.name }}</p>
                         </div>
-                    {% endfor %}
-                </div>
-            </div>
+                    </div>
+                {% endfor %}
+
+            {#<div class="row align-items-center">#}
+                {#<div class="d-flex justify-content-around">#}
+                    {#{% for product in products %}#}
+                        {#<div class="view overlay hm-blue-strong">#}
+                            {#<div class="p-2"><img src="{{ vich_uploader_asset(product, 'iconFile') }}" height="120" width="120" class="img-fluid"></div>#}
+                            {#<div class="mask flex-center"  onclick="product1()">#}
+                                {#<p class="white-text">Security Camera</p>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#{% endfor %}#}
+                {#</div>#}
+            {#</div>#}
         </div>
     </section>
     <hr noshade>

@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -85,6 +86,18 @@ class Product
      * @ORM\Column(type="string", length=255)
      */
     private $iconName;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Feature", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $features;
+
+    public function __construct()
+    {
+        $this->features = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -228,5 +241,21 @@ class Product
         $this->iconName = $iconName;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFeatures()
+    {
+        return $this->features;
+    }
+
+    /**
+     * @param ArrayCollection $features
+     */
+    public function setFeatures($features)
+    {
+        $this->features = $features;
     }
 }
