@@ -94,7 +94,7 @@ vich_uploader:
             delete_on_remove:   true
         feature_image:
             uri_prefix:         /assets/images/features
-            upload_destination: '%kernel.root_dir%/../web/assets/images/feature'
+            upload_destination: '%kernel.root_dir%/../web/assets/images/features'
             namer:              vich_uploader.namer_uniqid
             inject_on_load:     false
             delete_on_update:   true
