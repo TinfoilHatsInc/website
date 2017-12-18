@@ -49,10 +49,23 @@
                                             <img id="product-img" src="{{ vich_uploader_asset(product, 'imageFile') }}" style="width: 100px" class="img-fluid" alt="">
                                         </td>
                                     </tr>
-                                    <tr class="even">
+                                    <tr class="odd">
                                         <td>Icon</td>
                                         <td>
-                                            <img id="product-img" src="{{ vich_uploader_asset(product, 'iconFile') }}" style="width: 50px" class="img-fluid" alt="">
+                                            <img id="product-icon" src="{{ vich_uploader_asset(product, 'iconFile') }}" style="width: 50px" class="img-fluid" alt="">
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td>Features</td>
+                                        <td>
+                                            <ul style="list-style: none;">
+                                                {% for feature in product.features %}
+                                                    <li>
+                                                        <img class="img-fluid" style="width: 30px;" src="{{ vich_uploader_asset(feature, 'imageFile') }}">
+                                                        {{ feature.name }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
                                         </td>
                                     </tr>
                                 </tbody>
