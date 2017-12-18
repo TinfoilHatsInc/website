@@ -1,0 +1,84 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block stylesheets_header %}
+    <!-- DataTables CSS -->
+    <link href="{{ asset('assets/vendor/datatables-plugins/dataTables.bootstrap.css') }}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{{ asset('assets/vendor/datatables-responsive/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        {% include ':includes:menu-admin.html.twig' %}
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Orders</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-hover" id="dataTables-orders">
+                                <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Payment Status</th>
+                                    <th># Products</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for order in orders %}
+                                    <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}" style="cursor: pointer">
+                                        <td>{{ order.paymentId }}</td>
+                                        <td>{{ order.paymentStatus }}</td>
+                                        <td>{{ order.orderedProducts|length }}</td>
+                                        <td>{{ order|calculateOrderTotal }}</td>
+                                        <td>
+                                            <a href="{{ path('admin_orders_show', {'id': order.id}) }}" class="btn btn-sm btn-primary">
+                                                <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock %}
+
+{% block js_bottom %}
+    <!-- DataTables JavaScript -->
+    <script src="{{ asset('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables-responsive/dataTables.responsive.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-orders').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}
