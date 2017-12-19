@@ -34,7 +34,11 @@ class Referer extends \Twig_Extension
      */
     public function getReferer()
     {
-        return $this->request->getCurrentRequest()->headers->get('referer');
+        $referer = $this->request->getCurrentRequest()->headers->get('referer');
+        if(strpos($referer, '/password/reset') !== false) {
+            $referer = '/';
+        }
+        return $referer;
     }
 
 }

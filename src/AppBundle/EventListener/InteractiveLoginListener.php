@@ -14,7 +14,7 @@ class InteractiveLoginListener
 {
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        $session = $event->getRequest()->getSession();
-        //dump($session); //TODO handle session transfer
+//        dump($event->getRequest()->headers->get('referer'));
+        //TODO implement session cart transfer?
     }
 }
