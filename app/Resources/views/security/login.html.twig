@@ -33,9 +33,6 @@
             <div class="row align-items-center">
                 <div class="col-md-8 order-1">
                     <div class="p-5">
-                        {% if error %}
-                            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
                         <form role="form" action="{{ path('login') }}" method="post">
                             <fieldset>
                                 <div class="form-group">
@@ -53,7 +50,8 @@
                                 <input type="hidden" name="_csrf_token"
                                        value="{{ csrf_token('authenticate') }}"
                                 >
-                                <button class="btn btn-lg btn-success btn-block" type="submit">login</button>
+                                <button class="btn btn-lg btn-success btn-block" type="submit">login</button> <br>
+                                <a href="{{ path('forgot_password') }}">Forgot Password</a>
                             </fieldset>
                         </form>
                     </div>

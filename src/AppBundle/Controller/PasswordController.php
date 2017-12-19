@@ -42,7 +42,8 @@ class PasswordController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             if(!$this->get('security.password_encoder')->isPasswordValid($user, $form['oldPassword']->getData())) {
                 return $this->render(':profile:edit_password.html.twig', [
-                    'form' => $form->addError(new FormError("Incorrect Password"))->createView()
+                    'form' => $form->createView(),
+                    'error' => 'Invalid password'
                 ]);
             }
             $newPassword = $this->get('security.password_encoder')->encodePassword($user, $form['plainPassword']->getData());
