@@ -110,6 +110,13 @@ class User implements UserInterface, \Serializable
     private $passwordResetRequestedAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="chub_hash", type="string", nullable=true)
+     */
+    private $chubHash;
+
+    /**
      * @var Collection
      *
      * @ManyToMany(targetEntity="AppBundle\Entity\Role", cascade={"remove"})
@@ -360,6 +367,22 @@ class User implements UserInterface, \Serializable
     public function setPasswordResetRequestedAt($passwordResetRequestedAt)
     {
         $this->passwordResetRequestedAt = $passwordResetRequestedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChubHash()
+    {
+        return $this->chubHash;
+    }
+
+    /**
+     * @param string $chubHash
+     */
+    public function setChubHash($chubHash)
+    {
+        $this->chubHash = $chubHash;
     }
 
     /**

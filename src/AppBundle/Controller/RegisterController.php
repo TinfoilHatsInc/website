@@ -28,16 +28,23 @@ class RegisterController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $chubHash = hash('sha256', $user->getPlainPassword().$user->getEmail());
+            $user->setChubHash(password_hash($chubHash, PASSWORD_BCRYPT));
+
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
+            $user->eraseCredentials();
             $user->setPassword($password);
             $user->eraseCredentials();
+
             $role = $this->getDoctrine()->getRepository(Role::class)->findOneBy([
                 'name' => 'ROLE_CUSTOMER'
             ]);
             $user->setRoles([$role]);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
