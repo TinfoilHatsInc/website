@@ -9,8 +9,7 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Model\Cart;
-use AppBundle\Services\ShoppingCart\ShoppingCartService;
-use AppBundle\Services\ShoppingCartSessionService;
+use AppBundle\Util\TotalCalculator;
 
 class CartTotal extends \Twig_Extension
 {
@@ -27,6 +26,6 @@ class CartTotal extends \Twig_Extension
      */
     public function calculateCartTotal(Cart $cart)
     {
-        return ShoppingCartService::calculateCartTotal($cart);
+        return TotalCalculator::calculate($cart->getProducts());
     }
 }

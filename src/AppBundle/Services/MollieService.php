@@ -11,6 +11,8 @@ namespace AppBundle\Services;
 
 use AppBundle\Entity\Order;
 use AppBundle\Entity\OrderProduct;
+use AppBundle\Services\ShoppingCart\ShoppingCartService;
+use AppBundle\Util\TotalCalculator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Router;
@@ -33,7 +35,7 @@ class MollieService
     private $router;
 
     /**
-     * @var ShoppingCartSessionService
+     * @var ShoppingCartService
      */
     private $shoppingCartService;
 
@@ -49,7 +51,7 @@ class MollieService
      * @param Router $router
      * @param ShoppingCartService $shoppingCartService
      */
-    public function __construct($apiKey, EntityManager $em, Router $router, ShoppingCartSessionService $shoppingCartService)
+    public function __construct($apiKey, EntityManager $em, Router $router, ShoppingCartService $shoppingCartService)
     {
         $this->mollieApi = new \Mollie_API_Client();
         $this->em = $em;
@@ -79,7 +81,7 @@ class MollieService
         $order->setOrderedProducts(new ArrayCollection($productArray));
         $this->mollieApi->setApiKey($this->apiKey);
         $molliePayment = $this->mollieApi->payments->create([
-            "amount"    => ShoppingCartSessionService::calculateCartTotal($cart) / 100,
+            "amount"    => TotalCalculator::calculate($cart->getProducts()) / 100,
             "description"   => $this->createOrderDescription($order),
             "redirectUrl"   => $this->router->generate('show_order', ['id' => $order->getId()], Router::ABSOLUTE_URL),
             "webhookUrl"    => $this->router->generate('mollie_webhook', [], Router::ABSOLUTE_URL)

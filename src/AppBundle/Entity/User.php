@@ -76,19 +76,38 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var string
+     *
      * @Assert\Length(max="4096")
      */
     private $plainPassword;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
+     * @var boolean
+     *
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $confirmationToken;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $passwordResetRequestedAt;
 
     /**
      * @var Collection
@@ -309,6 +328,38 @@ class User implements UserInterface, \Serializable
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param string $confirmationToken
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPasswordResetRequestedAt()
+    {
+        return $this->passwordResetRequestedAt;
+    }
+
+    /**
+     * @param \DateTime $passwordResetRequestedAt
+     */
+    public function setPasswordResetRequestedAt($passwordResetRequestedAt)
+    {
+        $this->passwordResetRequestedAt = $passwordResetRequestedAt;
     }
 
     /**

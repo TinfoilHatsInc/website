@@ -61,4 +61,9 @@ class RegisterController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    public function confirmAccountAction(Request $request)
+    {
+        //TODO implement
+    }
 }

@@ -15,6 +15,6 @@ class InteractiveLoginListener
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         $session = $event->getRequest()->getSession();
-        dump($session); //TODO handle session transfer
+        //dump($session); //TODO handle session transfer
     }
 }

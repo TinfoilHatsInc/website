@@ -9,7 +9,8 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\Order;
-use AppBundle\Services\OrderService;
+use AppBundle\Util\OrderTotalCalculator;
+use AppBundle\Util\TotalCalculator;
 
 class OrderTotal extends \Twig_Extension
 {
@@ -28,6 +29,13 @@ class OrderTotal extends \Twig_Extension
      */
     public function calculateOrderTotal(Order $order)
     {
-        return OrderService::calculateOrderTotal($order);
+        $orderedProducts = [];
+        foreach ($order->getOrderedProducts() as $orderedProduct) {
+            $orderedProducts[] = [
+                'product' => $orderedProduct->getProduct(),
+                'amount' => $orderedProduct->getAmount
+            ];
+        }
+        return TotalCalculator::calculate($orderedProducts);
     }
 }

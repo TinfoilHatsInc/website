@@ -66,6 +66,8 @@ swiftmailer:
     host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
+    auth_mode: cram-md5
+    port: 2525
     spool: { type: memory }
 
 doctrine_migrations:
