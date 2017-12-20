@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table("user")
  * @ORM\Entity()
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var int
@@ -89,13 +90,6 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -108,6 +102,20 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $passwordResetRequestedAt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="failed_login_attempts", type="integer", nullable=true)
+     */
+    private $failedLoginAttempts;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
     /**
      * @var string
@@ -314,30 +322,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get isActive
-     *
-     * @return boolean
-     */
-    public function isActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return User
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getConfirmationToken()
@@ -367,6 +351,22 @@ class User implements UserInterface, \Serializable
     public function setPasswordResetRequestedAt($passwordResetRequestedAt)
     {
         $this->passwordResetRequestedAt = $passwordResetRequestedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFailedLoginAttempts()
+    {
+        return $this->failedLoginAttempts;
+    }
+
+    /**
+     * @param int $failedLoginAttempts
+     */
+    public function setFailedLoginAttempts($failedLoginAttempts)
+    {
+        $this->failedLoginAttempts = $failedLoginAttempts;
     }
 
     /**
@@ -434,6 +434,77 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Checks whether the user's account has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
+     *
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        //Not used within our system, can be implemented if needed
+        return true;
+    }
+
+    /**
+     * Checks whether the user is locked.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        //
+        return true;
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        //Not used within our system, can be implemented if needed
+        return true;
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     */
+    public function setIsEnabled($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
      * String representation of object
      * @link http://php.net/manual/en/serializable.serialize.php
      * @return string the string representation of the object or null
@@ -445,6 +516,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
+            $this->isActive
         ));
     }
 
@@ -463,6 +535,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
+            $this->isActive
             ) = unserialize($serialized);
     }
 }
