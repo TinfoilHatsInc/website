@@ -6,6 +6,8 @@ use AppBundle\Entity\User;
 use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\ForgotPasswordType;
 use AppBundle\Form\ResetPasswordType;
+use AppBundle\Messaging\Command\ForgotPassword;
+use AppBundle\Messaging\Command\ResetPassword;
 use AppBundle\Util\TokenGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -79,36 +81,7 @@ class PasswordController extends Controller
                     'form' => $form->createView()
                 ]);
             }
-
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
-                'email' => $email
-            ]);
-
-            if(!$user) {
-                //Render confirmation page even if user is not found
-                return $this->render(':security:forgot_password_send.html.twig');
-            }
-
-            $user->setPasswordResetRequestedAt(new \DateTime('now'));
-            TokenGenerator::generateToken($tokenForLink, $tokenHashForDatabase);
-            //Store hashed token in database
-            $user->setConfirmationToken($tokenHashForDatabase);
-            $this->getDoctrine()->getManager()->flush();
-
-            $message = (new \Swift_Message())
-                ->setTo($user->getEmail())
-                ->setFrom('noreply@tinfoilhats.com')
-                ->setSubject('Password Reset')
-                ->setBody(
-                    $this->renderView(':email:reset_password.html.twig', [
-                        'firstname' => $user->getFirstName(),
-                        'lastname' => $user->getLastName(),
-                        'resetLink' => $this->generateUrl('reset_password', ['token' => $tokenForLink], UrlGeneratorInterface::ABSOLUTE_URL)
-                    ]), 'text/html'
-                );
-            $mailer = $this->get('swiftmailer.mailer');
-            $mailer->send($message);
-
+            $this->get('command_bus')->handle(new ForgotPassword($email));
             return $this->render(':security:forgot_password_send.html.twig');
         }
 
@@ -150,12 +123,7 @@ class PasswordController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $plainPassword = $formData['plainPassword'];
-            $password = $this->get('security.password_encoder')->encodePassword($user, $plainPassword);
-            $user->setPassword($password);
-            $user->setPasswordResetRequestedAt(null);
-            $user->setConfirmationToken(null);
-            $this->getDoctrine()->getManager()->flush();
-            $this->get('request_stack')->getCurrentRequest()->request->set('referer', '/');
+            $this->get('command_bus')->handle(new ResetPassword($user, $plainPassword));
             return $this->redirectToRoute('login');
         }
 

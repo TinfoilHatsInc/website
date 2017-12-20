@@ -58,6 +58,7 @@ class InteractiveLoginListener
 
         if($user->getFailedLoginAttempts() >= $this->maxFailedLoginAttempts) {
             $user->setIsEnabled(false);
+            //TODO send user recovery email
         }
 
         $this->em->flush();

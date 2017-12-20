@@ -41,6 +41,12 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\AddAdminUser }
 
+    tinfoil.command.forgot_password:
+        class: AppBundle\Messaging\Handler\ForgotPasswordHandler
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\ForgotPassword }
+
     tinfoil.service.mollie:
         class: AppBundle\Services\MollieService
         public: true
