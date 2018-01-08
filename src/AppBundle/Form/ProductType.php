@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Feature;
 use AppBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -35,6 +36,10 @@ class ProductType extends AbstractType
                 'allow_delete' => false,
                 'download_link' => true,
                 'label' => 'Product Icon'
+            ])
+            ->add('chubRequired', CheckboxType::class, [
+                'required' => true,
+                'label' => 'Show CHUB Required Warning'
             ])
             ->add('features', CollectionType::class, [
                 'entry_type' => FeatureType::class,

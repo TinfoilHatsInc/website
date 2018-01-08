@@ -94,6 +94,13 @@ class Product
      */
     private $features;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="chub_required", type="boolean")
+     */
+    private $chubRequired = true;
+
     public function __construct()
     {
         $this->features = new ArrayCollection();
@@ -274,5 +281,21 @@ class Product
     public function removeFeature(Feature $feature)
     {
         $this->features->removeElement($feature);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isChubRequired()
+    {
+        return $this->chubRequired;
+    }
+
+    /**
+     * @param bool $chubRequired
+     */
+    public function setChubRequired($chubRequired)
+    {
+        $this->chubRequired = $chubRequired;
     }
 }

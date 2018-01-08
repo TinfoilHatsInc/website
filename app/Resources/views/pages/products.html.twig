@@ -213,6 +213,11 @@
                             <input hidden name="product_id" value="{{ product.id }}" />
                             <button type="submit" class="btn btn-sm btn-primary">buy</button>
                         </form>
+                        {% if product.chubRequired %}
+                            <div class="text-warning">
+                                Central Hub is required in order to use this module
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
