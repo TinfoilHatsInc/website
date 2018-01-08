@@ -70,8 +70,6 @@ class RegisterController extends Controller
         }
 
         $this->get('command_bus')->handle(new ConfirmAccount($user));
-        return $this->render(':security:login.html.twig', [
-            'message' => 'Your account is confirmed. You can now login.'
-        ]);
+        return $this->render(':security:account_confirmed.html.twig');
     }
 }

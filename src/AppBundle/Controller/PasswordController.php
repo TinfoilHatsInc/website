@@ -48,7 +48,7 @@ class PasswordController extends Controller
                     'error' => 'Invalid password'
                 ]);
             }
-            $this->get('command_bus')->handle(new ResetPassword($user, $form['newPassword']->getData()));
+            $this->get('command_bus')->handle(new ResetPassword($user, $form['plainPassword']->getData()));
             return $this->redirectToRoute('my_profile');
         }
 

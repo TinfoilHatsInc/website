@@ -58,6 +58,12 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\ConfirmAccount }
 
+    tinfoil.command.reset_password:
+        class: AppBundle\Messaging\Handler\ResetPasswordHandler
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\ResetPassword }
+
 
     ### Services ###
 
