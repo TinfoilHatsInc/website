@@ -20,24 +20,25 @@ class FeatureType extends AbstractType
                 'required' => true
             ])
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-            if (null != $event->getData()) {
-                if ($event->getData()->getImageName()) {
-                    $event->getForm()->add('imageFile', VichImageType::class, [
-                        'required' => false,
-                        'allow_delete' => false,
-                        'download_link' => true,
-                        'label' => 'Feature Icon'
-                    ]);
-                } else {
-                    $event->getForm()->add('imageFile', VichImageType::class, [
-                        'required' => true,
-                        'allow_delete' => false,
-                        'download_link' => true,
-                        'label' => 'Feature Icon'
-                    ]);
+                //Check if image is set, if not set required property
+                if (null != $event->getData()) {
+                    if ($event->getData()->getImageName()) {
+                        $event->getForm()->add('imageFile', VichImageType::class, [
+                            'required' => false,
+                            'allow_delete' => false,
+                            'download_link' => true,
+                            'label' => 'Feature Icon'
+                        ]);
+                    } else {
+                        $event->getForm()->add('imageFile', VichImageType::class, [
+                            'required' => true,
+                            'allow_delete' => false,
+                            'download_link' => true,
+                            'label' => 'Feature Icon'
+                        ]);
+                    }
                 }
-            }
-        });
+            });
     }
 
     public function configureOptions(OptionsResolver $resolver)

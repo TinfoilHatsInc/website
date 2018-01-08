@@ -29,10 +29,8 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+
+    ### Command Handlers ###
 
     tinfoil.command.create_admin:
         class: AppBundle\Messaging\Handler\AddAdminUserHandler
@@ -46,6 +44,22 @@ services:
         public: true
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\ForgotPassword }
+
+    tinfoil.command.register_user:
+        class: AppBundle\Messaging\Handler\RegisterUserHandler
+        public: true
+        arguments: ['@doctrine.orm.entity_manager', '@security.user_password_encoder.generic']
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\RegisterUser }
+
+    tinfoil.command.confirm_account:
+        class: AppBundle\Messaging\Handler\ConfirmAccountHandler
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\ConfirmAccount }
+
+
+    ### Services ###
 
     tinfoil.service.mollie:
         class: AppBundle\Services\MollieService
@@ -68,6 +82,9 @@ services:
         public: true
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
 
+
+    ### Twig Extensions ###
+
     tinfoil.twig.order:
         class: AppBundle\Twig\OrderTotal
         public: true
@@ -86,6 +103,9 @@ services:
         public: true
         tags:
           - security.voter
+
+
+    ### Event Listeners ###
 
     tinfoil.event.interactive_login:
         class: AppBundle\EventListener\InteractiveLoginListener

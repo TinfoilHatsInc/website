@@ -50,6 +50,7 @@ class ForgotPasswordHandler
     public function handle(ForgotPassword $forgotPassword)
     {
         $email = $forgotPassword->getEmail();
+        /** @var User $user */
         $user = $this->em->getRepository(User::class)->findOneBy([
             'email' => $email
         ]);
@@ -58,7 +59,7 @@ class ForgotPasswordHandler
             return;
         }
 
-        $user->setPasswordResetRequestedAt(new \DateTime('now'));
+        $user->setTokenCreatedAt(new \DateTime('now'));
         TokenGenerator::generateToken($tokenForLink, $tokenHashForDatabase);
         //Store hashed token in database
         $user->setConfirmationToken($tokenHashForDatabase);

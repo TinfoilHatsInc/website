@@ -13,13 +13,28 @@
         </div>
     </header>
 
-    {% if error %}
+    {% if error is defined %}
         <section>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-8 order-1">
                         <div class="p-5">
                             <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr noshade>
+    {% endif %}
+
+    {% if message is defined %}
+        <section>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8 order-1">
+                        <div class="p-5">
+                            <p class="text-success">{{ message }}</p>
                         </div>
                     </div>
                 </div>

@@ -36,9 +36,8 @@
                                 {{ form_widget(form.plainPassword) }}
                             </div>
                             <div class="form-check">
-                                {#{{ form_label(form.termsAccepted) }}#}
-                                    {{ form_row(form.acceptTerms) }}
-                                    {{ form_widget(form.acceptTerms, { 'attr': {'class': 'form-check-input'} }) }}
+                                {{ form_row(form.acceptTerms) }}
+                                {{ form_widget(form.acceptTerms, { 'attr': {'class': 'form-check-input'} }) }}
                             </div>
                             <div class="form-group">
                                 {{ form_widget(form.register, { 'attr': {'class': 'btn btn-success'} }) }}

@@ -101,7 +101,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $passwordResetRequestedAt;
+    private $tokenCreatedAt;
 
     /**
      * @var int
@@ -137,7 +137,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function __construct()
     {
-        $this->isActive = true;
+        $this->isActive = false;
         $this->roles = new ArrayCollection();
         $this->orders = new ArrayCollection();
     }
@@ -340,17 +340,17 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @return \DateTime
      */
-    public function getPasswordResetRequestedAt()
+    public function getTokenCreatedAt()
     {
-        return $this->passwordResetRequestedAt;
+        return $this->tokenCreatedAt;
     }
 
     /**
-     * @param \DateTime $passwordResetRequestedAt
+     * @param \DateTime $tokenCreatedAt
      */
-    public function setPasswordResetRequestedAt($passwordResetRequestedAt)
+    public function setTokenCreatedAt($tokenCreatedAt)
     {
-        $this->passwordResetRequestedAt = $passwordResetRequestedAt;
+        $this->tokenCreatedAt = $tokenCreatedAt;
     }
 
     /**

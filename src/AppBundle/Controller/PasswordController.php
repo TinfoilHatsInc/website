@@ -48,11 +48,7 @@ class PasswordController extends Controller
                     'error' => 'Invalid password'
                 ]);
             }
-            $newPassword = $this->get('security.password_encoder')->encodePassword($user, $form['plainPassword']->getData());
-            $user->setPassword($newPassword);
-            $user->eraseCredentials();
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
+            $this->get('command_bus')->handle(new ResetPassword($user, $form['newPassword']->getData()));
             return $this->redirectToRoute('my_profile');
         }
 
@@ -105,15 +101,16 @@ class PasswordController extends Controller
         }
 
         $hashedToken = TokenGenerator::calculateTokenHash($token);
+        /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'confirmationToken' => $hashedToken
         ]);
 
         if(!$user) {
-            return new Response("Token not found");
+            return new Response("Invalid reset token");
         }
 
-        if(TokenGenerator::isTokenExpired($user->getPasswordResetRequestedAt())) {
+        if(TokenGenerator::isTokenExpired($user->getTokenCreatedAt())) {
             return new Response("Token expired");
         }
 

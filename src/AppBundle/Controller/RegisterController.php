@@ -5,10 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Messaging\Command\ConfirmAccount;
+use AppBundle\Messaging\Command\RegisterUser;
+use AppBundle\Util\TokenGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -28,40 +32,9 @@ class RegisterController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $chubHash = hash('sha256', $user->getPlainPassword().$user->getEmail());
-            $user->setChubHash(password_hash($chubHash, PASSWORD_BCRYPT));
+            $this->get('command_bus')->handle(new RegisterUser($user));
 
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
-            $user->eraseCredentials();
-            $user->setPassword($password);
-            $user->eraseCredentials();
-
-            $role = $this->getDoctrine()->getRepository(Role::class)->findOneBy([
-                'name' => 'ROLE_CUSTOMER'
-            ]);
-            $user->setRoles([$role]);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-            $this->get('security.token_storage')->setToken($token);
-            $this->get('session')->set('_security_main', serialize($token));
-
-            $targetPath = $request->get('_target_path');
-            if(!$targetPath) {
-                return $this->redirectToRoute('my_profile');
-            }
-
-            //Check target path
-            $targetPath = $request->get('_target_path');
-            $baseUrl = $this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_URL);
-            //Base found at first position
-            if(strpos($targetPath, $baseUrl) !== 0) {
-                return $this->redirectToRoute('my_profile');
-            }
-            return $this->redirect($request->get('_target_path'));
+            return $this->render(':security:confirm_account.html.twig');
         }
 
         return $this->render(':security:register.html.twig', [
@@ -69,8 +42,36 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function confirmAccountAction(Request $request)
+    /**
+     * @Route(path="/confirm/{token}", name="confirm_account")
+     * @Method({"GET"})
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function confirmAccountAction(Request $request, $token)
     {
-        //TODO implement
+        if(!$token && TokenGenerator::isTokenValid($token)) {
+            return new Response("Invalid reset token");
+        }
+
+        $hashedToken = TokenGenerator::calculateTokenHash($token);
+        /** @var User $user */
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
+            'confirmationToken' => $hashedToken
+        ]);
+
+        if(!$user) {
+            return new Response("Invalid reset token");
+        }
+
+        if(TokenGenerator::isTokenExpired($user->getTokenCreatedAt())) {
+            return new Response("Token expired");
+        }
+
+        $this->get('command_bus')->handle(new ConfirmAccount($user));
+        return $this->render(':security:login.html.twig', [
+            'message' => 'Your account is confirmed. You can now login.'
+        ]);
     }
 }

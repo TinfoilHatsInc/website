@@ -38,7 +38,7 @@ class ResetPasswordHandler
         $password = $this->encoder->encodePassword($user, $plainPassword);
         $user->setPassword($password);
         $user->eraseCredentials();
-        $user->setPasswordResetRequestedAt(null);
+        $user->setTokenCreatedAt(null);
         $user->setConfirmationToken(null);
         $this->em->flush();
     }
