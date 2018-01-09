@@ -38,7 +38,7 @@
                                 {% for chub in chubs %}
                                     <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}" style="cursor: pointer">
                                         <td>{{ chub.id }}</td>
-                                        <td>{{ chub.user.email }} ({{ chub.user.firstname chub.user.lastname }})</td>
+                                        <td>{{ chub.user.email }} ({{ chub.user.firstname }} {{ chub.user.lastname }})</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
