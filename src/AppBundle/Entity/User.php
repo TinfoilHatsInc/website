@@ -125,6 +125,13 @@ class User implements AdvancedUserInterface, \Serializable
     private $chubHash;
 
     /**
+     * @var Chub
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Chub", mappedBy="user")
+     */
+    private $ownedChubs;
+
+    /**
      * @var Collection
      *
      * @ManyToMany(targetEntity="AppBundle\Entity\Role", cascade={"remove"})
@@ -140,6 +147,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->isActive = false;
         $this->roles = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->ownedChubs = new ArrayCollection();
     }
 
     /**

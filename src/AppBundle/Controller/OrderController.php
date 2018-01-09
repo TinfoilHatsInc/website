@@ -51,7 +51,6 @@ class OrderController extends Controller
 
             $mollieService = $this->get('tinfoil.service.mollie');
             $redirectUrl = $mollieService->createPayment($order);
-            $this->getDoctrine()->getManager()->flush();
             return $this->redirect($redirectUrl);
         }
 

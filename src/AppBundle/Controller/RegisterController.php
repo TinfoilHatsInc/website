@@ -46,10 +46,10 @@ class RegisterController extends Controller
      * @Route(path="/confirm/{token}", name="confirm_account")
      * @Method({"GET"})
      *
-     * @param Request $request
+     * @param $token
      * @return Response
      */
-    public function confirmAccountAction(Request $request, $token)
+    public function confirmAccountAction($token)
     {
         if(!$token && TokenGenerator::isTokenValid($token)) {
             return new Response("Invalid reset token");

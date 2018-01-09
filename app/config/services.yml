@@ -76,7 +76,13 @@ services:
         class: AppBundle\Messaging\Handler\SendAccountRecoveryEmailHandler
         public: true
         tags:
-          - { name: command_handler, handles: AppBundle\Messaging\Command\SendAccountRecoveryEmail }
+            - { name: command_handler, handles: AppBundle\Messaging\Command\SendAccountRecoveryEmail }
+
+    tinfoil.command.register_chub:
+        class: AppBundle\Messaging\Handler\RegisterChubHandler
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\RegisterChub }
 
 
     ### Services ###
