@@ -59,7 +59,7 @@ class SendAccountRecoveryEmailHandler
             ->setFrom('noreply@tinfoilhats.com')
             ->setSubject('Recover Account | Tinfoil Hats, inc.')
             ->setBody(
-                $this->twigEngine->render(':email:recover_account.twig', [
+                $this->twigEngine->render(':email:recover_account.html.twig', [
                     'firstname' => $user->getFirstName(),
                     'lastname' => $user->getLastName(),
                     'recoverLink' => $this->router->generate('recover_account', ['token' => $tokenForLink], UrlGeneratorInterface::ABSOLUTE_URL)

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AccountRecoveryController extends Controller
 {
     /**
-     * @Route(path="/recover", name="recover_account")
+     * @Route(path="/recover/{token}", name="recover_account")
      * @Method({"GET"})
      *
      * @param $token

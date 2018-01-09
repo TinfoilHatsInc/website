@@ -28,6 +28,7 @@ class RecoverDisabledAccountHandler
     {
         $user = $recoverDisabledAccount->getUser();
         $user->setIsEnabled(true);
+        $user->setFailedLoginAttempts(0);
         $user->setTokenCreatedAt(null);
         $user->setConfirmationToken(null);
         $this->em->flush();

@@ -87,6 +87,14 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\SendAccountRecoveryEmail }
 
+    tinfoil.command.recover_disabled_account:
+        class: AppBundle\Messaging\Handler\RecoverDisabledAccountHandler
+        public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\RecoverDisabledAccount }
+
     tinfoil.command.register_chub:
         class: AppBundle\Messaging\Handler\RegisterChubHandler
         public: true
