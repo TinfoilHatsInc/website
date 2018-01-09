@@ -21,3 +21,5 @@ parameters:
     mollie_api_key: 0
 
     max_failed_login_attempts: 3
+
+    chub_database: name

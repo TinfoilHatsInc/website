@@ -35,32 +35,38 @@ services:
     tinfoil.command.create_admin:
         class: AppBundle\Messaging\Handler\AddAdminUserHandler
         public: true
-        arguments: ['@doctrine.orm.entity_manager', '@security.user_password_encoder.generic']
+        arguments: ['@doctrine.orm.default_entity_manager', '@security.user_password_encoder.generic']
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\AddAdminUser }
 
     tinfoil.command.forgot_password:
         class: AppBundle\Messaging\Handler\ForgotPasswordHandler
         public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\ForgotPassword }
 
     tinfoil.command.register_user:
         class: AppBundle\Messaging\Handler\RegisterUserHandler
         public: true
-        arguments: ['@doctrine.orm.entity_manager', '@security.user_password_encoder.generic']
+        arguments: ['@doctrine.orm.default_entity_manager', '@security.user_password_encoder.generic']
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\RegisterUser }
 
     tinfoil.command.confirm_account:
         class: AppBundle\Messaging\Handler\ConfirmAccountHandler
         public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\ConfirmAccount }
 
     tinfoil.command.reset_password:
         class: AppBundle\Messaging\Handler\ResetPasswordHandler
         public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\ResetPassword }
 
@@ -68,6 +74,7 @@ services:
         class: AppBundle\Messaging\Handler\IncrementFailedLoginAttemptsHandler
         public: true
         arguments:
+            $em: '@doctrine.orm.default_entity_manager'
             $maxFailedLoginAttempts: '%max_failed_login_attempts%'
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\IncrementFailedLoginAttempts }
@@ -75,12 +82,17 @@ services:
     tinfoil.command.send_account_recovery_email:
         class: AppBundle\Messaging\Handler\SendAccountRecoveryEmailHandler
         public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\SendAccountRecoveryEmail }
 
     tinfoil.command.register_chub:
         class: AppBundle\Messaging\Handler\RegisterChubHandler
         public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
+            $chubEm: '@doctrine.orm.chub_entity_manager'
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\RegisterChub }
 
