@@ -2,22 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: matthijs
- * Date: 20-12-17
- * Time: 14:25
+ * Date: 9-1-18
+ * Time: 10:35
  */
 
 namespace AppBundle\Messaging\Handler;
 
 
-use AppBundle\Entity\User;
-use AppBundle\Messaging\Command\ForgotPassword;
+use AppBundle\Messaging\Command\SendAccountRecoveryEmail;
 use AppBundle\Util\TokenGenerator;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\Router;
 
-class ForgotPasswordHandler
+class SendAccountRecoveryEmailHandler
 {
     /**
      * @var EntityManager
@@ -25,9 +24,9 @@ class ForgotPasswordHandler
     private $em;
 
     /**
-     * @var \Swift_Mailer
+     * @var Router
      */
-    private $mailer;
+    private $router;
 
     /**
      * @var TwigEngine
@@ -35,45 +34,35 @@ class ForgotPasswordHandler
     private $twigEngine;
 
     /**
-     * @var Router
+     * @var \Swift_Mailer
      */
-    private $router;
+    private $mailer;
 
-    public function __construct(EntityManager $em, \Swift_Mailer $mailer, TwigEngine $twigEngine, Router $router)
+    public function __construct(EntityManager $em, Router $router, TwigEngine $twigEngine, \Swift_Mailer $mailer)
     {
         $this->em = $em;
-        $this->mailer = $mailer;
-        $this->twigEngine = $twigEngine;
         $this->router = $router;
+        $this->twigEngine = $twigEngine;
+        $this->mailer = $mailer;
     }
 
-    public function handle(ForgotPassword $forgotPassword)
+    public function handle(SendAccountRecoveryEmail $sendAccountRecoveryEmail)
     {
-        $email = $forgotPassword->getEmail();
-        /** @var User $user */
-        $user = $this->em->getRepository(User::class)->findOneBy([
-            'email' => $email
-        ]);
-
-        if(!$user) {
-            return;
-        }
-
+        $user = $sendAccountRecoveryEmail->getUser();
         $user->setTokenCreatedAt(new \DateTime('now'));
         TokenGenerator::generateToken($tokenForLink, $tokenHashForDatabase);
-        //Store hashed token in database
         $user->setConfirmationToken($tokenHashForDatabase);
         $this->em->flush();
 
         $message = (new \Swift_Message())
             ->setTo($user->getEmail())
             ->setFrom('noreply@tinfoilhats.com')
-            ->setSubject('Password Reset | Tinfoil Hats, inc.')
+            ->setSubject('Recover Account | Tinfoil Hats, inc.')
             ->setBody(
-                $this->twigEngine->render(':email:reset_password.html.twig', [
+                $this->twigEngine->render(':email:recover_account.twig', [
                     'firstname' => $user->getFirstName(),
                     'lastname' => $user->getLastName(),
-                    'resetLink' => $this->router->generate('reset_password', ['token' => $tokenForLink], UrlGeneratorInterface::ABSOLUTE_URL)
+                    'recoverLink' => $this->router->generate('recover_account', ['token' => $tokenForLink], UrlGeneratorInterface::ABSOLUTE_URL)
                 ]), 'text/html'
             );
         $this->mailer->send($message);

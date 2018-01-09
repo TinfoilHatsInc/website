@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="font-family: Trebuchet MS,serif; font-weight: 300; color: #212529;">
+<div style="overflow-x: hidden;">
+    <div style="width: 100%; background-color: #343a40; padding: .5rem 1rem;">
+        <div style="margin: 0 auto; display: table;">
+            <a style="display: inline-block; text-decoration: none; color: white; font-size: 1.25rem; padding: .3125rem 0"
+               href="https://www.tinfoilhats.ninja">Tinfoil Hats, inc</a>
+        </div>
+    </div>
+    <div
+            style="overflow: hidden; width: 100%; background: url('https://tinfoilhats.ninja/assets/images/banner.png') no-repeat center center scroll; background-size: cover; height: 100px;">
+        <div
+                style="display: inline-block; color: white; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); text-align: center;">
+            <h1>Hello {{ firstname }}  {{ lastname }},</h1>
+        </div>
+    </div>
+    <div style="padding: 20px">
+        Your account has been locked because there were to many failed login attempts. <br>
+        Click the link below to recover your account. The link expires in 8 hours <br>
+        <a href="{{ recoverLink }}">{{ recoverLink }}</a>
+        If you did not attempt to login yourself, we strongly recommend to change your password. <br>
+    </div>
+    <div style="width: 100%; color: white; background-color: #343a40; padding: 3rem 0; text-align: center">
+        Copyright © Tinfoil Hats, inc {{ "now"|date("Y") }}
+    </div>
+</div>
+</body>
+</html>

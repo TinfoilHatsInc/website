@@ -64,6 +64,20 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\ResetPassword }
 
+    tinfoil.command.increment_failed_login_attempts:
+        class: AppBundle\Messaging\Handler\IncrementFailedLoginAttemptsHandler
+        public: true
+        arguments:
+            $maxFailedLoginAttempts: '%max_failed_login_attempts%'
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\IncrementFailedLoginAttempts }
+
+    tinfoil.command.send_account_recovery_email:
+        class: AppBundle\Messaging\Handler\SendAccountRecoveryEmailHandler
+        public: true
+        tags:
+          - { name: command_handler, handles: AppBundle\Messaging\Command\SendAccountRecoveryEmail }
+
 
     ### Services ###
 

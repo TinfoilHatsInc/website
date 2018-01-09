@@ -9,7 +9,11 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\User;
+use AppBundle\Messaging\Command\IncrementFailedLoginAttempts;
+use AppBundle\Util\TokenGenerator;
 use Doctrine\ORM\EntityManager;
+use SimpleBus\SymfonyBridge\Bus\CommandBus;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -25,10 +29,16 @@ class InteractiveLoginListener
      */
     private $em;
 
-    public function __construct($maxFailedLoginAttempts, EntityManager $em)
+    /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
+    public function __construct($maxFailedLoginAttempts, EntityManager $em, CommandBus $commandBus)
     {
         $this->maxFailedLoginAttempts = $maxFailedLoginAttempts;
         $this->em = $em;
+        $this->commandBus = $commandBus;
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
@@ -44,23 +54,12 @@ class InteractiveLoginListener
 
     public function onSecurityAuthenticationFailure(AuthenticationFailureEvent $event)
     {
-        /** @var User $user */
-        $user = $event->getAuthenticationToken()->getUser();
-        $user = $this->em->getRepository(User::class)->findOneBy([
-            'email' => $user
-        ]);
+        $email = $event->getAuthenticationToken()->getUser();
 
-        if(!$user) {
+        if(!is_string($email)) {
             return;
         }
 
-        $user->setFailedLoginAttempts($user->getFailedLoginAttempts() + 1);
-
-        if($user->getFailedLoginAttempts() >= $this->maxFailedLoginAttempts) {
-            $user->setIsEnabled(false);
-            //TODO send user recovery email
-        }
-
-        $this->em->flush();
+        $this->commandBus->handle(new IncrementFailedLoginAttempts($email));
     }
 }

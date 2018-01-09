@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: matthijs
- * Date: 20-12-17
- * Time: 14:21
+ * Date: 9-1-18
+ * Time: 10:34
  */
 
 namespace AppBundle\Messaging\Command;
@@ -11,7 +11,7 @@ namespace AppBundle\Messaging\Command;
 
 use AppBundle\Entity\User;
 
-class RecoverDisabledAccount
+class SendAccountRecoveryEmail
 {
     /**
      * @var User
