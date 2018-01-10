@@ -39,7 +39,7 @@ security:
                 path: /
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_CUSTOMER]
         ROLE_CUSTOMER: [ROLE_USER]
 
     # Other access control rules are declared at controller actions

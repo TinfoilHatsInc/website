@@ -50,9 +50,6 @@ class OrderController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $this->get('command_bus')->handle(new FillOrder($order));
             $this->get('command_bus')->handle(new CreatePayment($order));
-
-//            $mollieService = $this->get('tinfoil.service.mollie');
-//            $redirectUrl = $mollieService->createPayment($order);
             return $this->redirect($order->getPaymentUrl());
         }
 
