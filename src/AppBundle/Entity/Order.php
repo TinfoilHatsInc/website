@@ -49,6 +49,13 @@ class Order
     private $paymentStatus;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $paymentUrl;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\OrderProduct", mappedBy="order")
@@ -153,6 +160,22 @@ class Order
     public function setPaymentStatus($paymentStatus)
     {
         $this->paymentStatus = $paymentStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentUrl()
+    {
+        return $this->paymentUrl;
+    }
+
+    /**
+     * @param string $paymentUrl
+     */
+    public function setPaymentUrl($paymentUrl)
+    {
+        $this->paymentUrl = $paymentUrl;
     }
 
     /**

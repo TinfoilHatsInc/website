@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\User;
 use AppBundle\Form\OrderType;
+use AppBundle\Messaging\Command\CreatePayment;
+use AppBundle\Messaging\Command\FillOrder;
 use AppBundle\Security\OrderVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -46,12 +48,12 @@ class OrderController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->persist($order);
-            $this->getDoctrine()->getManager()->flush();
+            $this->get('command_bus')->handle(new FillOrder($order));
+            $this->get('command_bus')->handle(new CreatePayment($order));
 
-            $mollieService = $this->get('tinfoil.service.mollie');
-            $redirectUrl = $mollieService->createPayment($order);
-            return $this->redirect($redirectUrl);
+//            $mollieService = $this->get('tinfoil.service.mollie');
+//            $redirectUrl = $mollieService->createPayment($order);
+            return $this->redirect($order->getPaymentUrl());
         }
 
         return $this->render(':order:create.html.twig', [

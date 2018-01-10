@@ -104,14 +104,33 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\RegisterChub }
 
+    tinfoil.command.fill_order:
+        class: AppBundle\Messaging\Handler\FillOrderHandler
+        public: true
+        arguments:
+            $em: '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\FillOrder }
+
+    tinfoil.command.create_payment:
+        class: AppBundle\Messaging\Handler\CreatePaymentHandler
+        public: true
+        arguments:
+            $apiKey: '%mollie_api_key%'
+            $em: '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\CreatePayment }
+
 
     ### Services ###
 
-    tinfoil.service.mollie:
-        class: AppBundle\Services\MollieService
-        public: true
-        arguments: ['%mollie_api_key%', '@doctrine.orm.entity_manager', '@router', '@tinfoil.service.cart']
-        scope: request
+#    tinfoil.service.mollie:
+#        class: AppBundle\Services\MollieService
+#        public: true
+#        arguments:
+#            $apiKey: '%mollie_api_key%'
+#            $em: '@doctrine.orm.default_entity_manager'
+#        scope: request
 
     tinfoil.service.cart:
         class: AppBundle\Services\ShoppingCart\ShoppingCartService

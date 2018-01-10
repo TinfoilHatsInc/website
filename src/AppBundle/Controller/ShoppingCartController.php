@@ -53,7 +53,7 @@ class ShoppingCartController extends Controller
         try {
             $this->get('tinfoil.service.cart')->addToCart($product, $amount);
         } catch (\InvalidArgumentException $iE) {
-            dump($iE->getMessage());die; //TODO error handling
+            //TODO error handling
             return $this->redirectToRoute('shopping_cart');
         }
         return $this->redirectToRoute('shopping_cart');
