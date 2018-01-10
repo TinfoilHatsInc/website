@@ -82,7 +82,7 @@ class RegisterUserHandler
             ->setFrom('noreply@tinfoilhats.com')
             ->setSubject('Account Registration | Tinfoil Hats, inc')
             ->setBody(
-                $this->twigEngine->render('recover_account.html.twig', [
+                $this->twigEngine->render(':email:confirm_account.html.twig', [
                     'firstname' => $user->getFirstName(),
                     'lastname' => $user->getLastName(),
                     'resetLink' => $this->router->generate('confirm_account', ['token' => $tokenForLink], UrlGeneratorInterface::ABSOLUTE_URL)

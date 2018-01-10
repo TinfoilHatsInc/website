@@ -78,7 +78,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @Assert\Length(max="4096")
+     * @Assert\Length(max="4096", min="8", minMessage="Password should be at least 8 characters long")
      */
     private $plainPassword;
 

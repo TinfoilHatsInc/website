@@ -38,6 +38,9 @@ class Referer extends \Twig_Extension
         if(strpos($referer, '/password/reset') !== false) {
             $referer = '/';
         }
+        if(strpos($referer, '/confirm') !== false) {
+            $referer = '/';
+        }
         return $referer;
     }
 
