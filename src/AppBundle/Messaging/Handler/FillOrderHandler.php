@@ -48,7 +48,6 @@ class FillOrderHandler
         $order = $order->getOrder();
 
         $cart = $this->shoppingCartService->getCartModel();
-
         $productArray = [];
         foreach ($cart->getProducts() as $product) {
             $orderProduct = new OrderProduct();
@@ -56,6 +55,7 @@ class FillOrderHandler
             $orderProduct->setAmount($product['amount']);
             $orderProduct->setOrder($order);
             $this->em->persist($orderProduct);
+            $productArray[] = $orderProduct;
         }
 
         $order->setOrderedProducts(new ArrayCollection($productArray));

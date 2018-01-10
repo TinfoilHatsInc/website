@@ -29,13 +29,6 @@ class OrderTotal extends \Twig_Extension
      */
     public function calculateOrderTotal(Order $order)
     {
-        $orderedProducts = [];
-        foreach ($order->getOrderedProducts() as $orderedProduct) {
-            $orderedProducts[] = [
-                'product' => $orderedProduct->getProduct(),
-                'amount' => $orderedProduct->getAmount
-            ];
-        }
-        return TotalCalculator::calculate($orderedProducts);
+        return TotalCalculator::calculateFromOrder($order);
     }
 }

@@ -51,7 +51,7 @@ class CreatePaymentHandler
 
         $this->mollieApi->setApiKey($this->apiKey);
         $molliePayment = $this->mollieApi->payments->create([
-            "amount"    => TotalCalculator::calculate($order->getOrderedProducts()->toArray()) / 100,
+            "amount"    => TotalCalculator::calculateFromOrder($order) / 100,
             "description"   => $this->createOrderDescription($order),
             "redirectUrl"   => $this->router->generate('show_order', ['id' => $order->getId()], Router::ABSOLUTE_URL),
             "webhookUrl"    => $this->router->generate('mollie_webhook', [], Router::ABSOLUTE_URL)

@@ -26,6 +26,6 @@ class CartTotal extends \Twig_Extension
      */
     public function calculateCartTotal(Cart $cart)
     {
-        return TotalCalculator::calculate($cart->getProducts());
+        return TotalCalculator::calculateFromArray($cart->getProducts());
     }
 }
