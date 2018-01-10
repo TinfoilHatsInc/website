@@ -15,11 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
  * Class AdminController
  * @package AppBundle\Controller\Admin
  */
-class AdminController extends Controller
+class DashboardController extends Controller
 {
 
     /**
-     * @Route(path="/", name="admin")
+     * @Route(path="/", name="admin_dashboard")
      * @Method("GET")
      *
      * @return \Symfony\Component\HttpFoundation\Response
