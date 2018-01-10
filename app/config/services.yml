@@ -124,14 +124,6 @@ services:
 
     ### Services ###
 
-#    tinfoil.service.mollie:
-#        class: AppBundle\Services\MollieService
-#        public: true
-#        arguments:
-#            $apiKey: '%mollie_api_key%'
-#            $em: '@doctrine.orm.default_entity_manager'
-#        scope: request
-
     tinfoil.service.cart:
         class: AppBundle\Services\ShoppingCart\ShoppingCartService
         public: true

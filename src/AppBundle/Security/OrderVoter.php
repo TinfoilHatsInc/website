@@ -60,8 +60,6 @@ class OrderVoter extends Voter
         /** @var Order $order */
         $order = $subject;
 
-        if($this->de)
-
         if($user->getId() == $order->getUser()->getId()) {
             return true;
         }
