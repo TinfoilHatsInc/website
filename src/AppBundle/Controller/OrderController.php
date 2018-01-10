@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\OrderType;
 use AppBundle\Messaging\Command\CreatePayment;
 use AppBundle\Messaging\Command\FillOrder;
+use AppBundle\Messaging\Command\SendOrderEmail;
 use AppBundle\Security\OrderVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -50,6 +51,7 @@ class OrderController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $this->get('command_bus')->handle(new FillOrder($order));
             $this->get('command_bus')->handle(new CreatePayment($order));
+            $this->get('command_bus')->handle(new SendOrderEmail($order));
             return $this->redirect($order->getPaymentUrl());
         }
 

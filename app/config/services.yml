@@ -121,6 +121,12 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\CreatePayment }
 
+    tinfoil.command.send_order_email:
+        class: AppBundle\Messaging\Handler\SendOrderEmailHandler
+        public: true
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\SendOrderEmail }
+
 
     ### Services ###
 

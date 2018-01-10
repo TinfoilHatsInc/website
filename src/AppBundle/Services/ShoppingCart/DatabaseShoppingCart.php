@@ -148,7 +148,7 @@ class DatabaseShoppingCart implements ShoppingCart
      */
     public function clearCart()
     {
-        $cart = $this->em->getRepository(\AppBundle\Entity\Cart::class  )->findOneBy([
+        $cart = $this->em->getRepository(\AppBundle\Entity\Cart::class)->findOneBy([
             'user' => $this->user
         ]);
         $this->em->remove($cart);

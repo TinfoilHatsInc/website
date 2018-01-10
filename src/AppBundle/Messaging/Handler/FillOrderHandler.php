@@ -61,5 +61,6 @@ class FillOrderHandler
         $order->setOrderedProducts(new ArrayCollection($productArray));
         $this->em->persist($order);
         $this->em->flush();
+        $this->shoppingCartService->clearCart();
     }
 }
