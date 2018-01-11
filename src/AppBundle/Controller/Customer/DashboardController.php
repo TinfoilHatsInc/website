@@ -24,6 +24,14 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
-        return $this->render(':customer:index.html.twig');
+        $user = $this->getUser();
+        $chubs = $this->getDoctrine()->getRepository(Chub::class)->findBy([
+            'user' => $user
+        ], [
+            'createdAt' => 'DESC'
+        ]);
+        return $this->render(':customer:index.html.twig', [
+            'chubs' => $chubs
+        ]);
     }
 }

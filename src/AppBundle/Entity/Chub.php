@@ -33,6 +33,13 @@ class Chub
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $alias;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="ownedChubs")
@@ -65,6 +72,22 @@ class Chub
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @param string $alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
     }
 
     /**

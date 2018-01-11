@@ -10,6 +10,34 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Central Hubs Alarm Status
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    {% for chub in chubs %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel {% if chub.alarmEnabled %}panel-red{% else %}panel-green{% endif %}">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa {% if chub.alarmEnabled %}fa-bell-o{% else %}fa-bell-slash-o{% endif %} fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">{% if chub.alarmEnabled %}On{% else %}Off{% endif %}</div>
+                                            <div>Alarm Status</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
     </div>
 </div>
 <!-- /#page-wrapper -->
