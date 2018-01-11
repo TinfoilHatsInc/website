@@ -39,7 +39,7 @@ class Chub
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $alias;
 
@@ -67,6 +67,7 @@ class Chub
 
     public function __construct()
     {
+        $this->alarmStatus = self::ALARM_STATUS_OFF;
         $this->notifications = new ArrayCollection();
     }
 
