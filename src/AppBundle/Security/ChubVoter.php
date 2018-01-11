@@ -12,18 +12,12 @@ use AppBundle\Entity\Chub;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 class ChubVoter extends Voter
 {
     const VIEW = 'view';
 
-    private $decisionManager;
-
-    public function __construct(AccessDecisionManagerInterface $decisionManager)
-    {
-        $this->decisionManager = $decisionManager;
-    }
+    const EDIT = 'edit';
 
     /**
      * Determines if the attribute and subject are supported by this voter.
@@ -35,7 +29,7 @@ class ChubVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if(!in_array($attribute, [self::VIEW])) {
+        if(!in_array($attribute, [self::VIEW, self::EDIT])) {
             return false;
         }
 
@@ -63,10 +57,6 @@ class ChubVoter extends Voter
 
         if(!$user instanceof User) {
             return false;
-        }
-
-        if($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
-            return true;
         }
 
         /** @var Chub $chub */

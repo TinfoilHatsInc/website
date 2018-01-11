@@ -18,21 +18,26 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     {% for chub in chubs %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="panel {% if chub.alarmEnabled %}panel-red{% else %}panel-green{% endif %}">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <i class="fa {% if chub.alarmEnabled %}fa-bell-o{% else %}fa-bell-slash-o{% endif %} fa-5x"></i>
-                                        </div>
-                                        <div class="col-xs-9 text-right">
-                                            <div class="huge">{% if chub.alarmEnabled %}On{% else %}Off{% endif %}</div>
-                                            <div>Alarm Status</div>
+                        <a href="{{ path('customer_chubs_show', {'id': chub.id}) }}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel {% if chub.alarmEnabled %}panel-red{% else %}panel-green{% endif %}">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa {% if chub.alarmEnabled %}fa-bell-o{% else %}fa-bell-slash-o{% endif %} fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">{% if chub.alarmEnabled %}On{% else %}Off{% endif %}</div>
+                                                <br>
+                                                <div>{% if chub.alias %}{{ chub.alias }}{% endif %}</div>
+                                                <br>
+                                                <div>{{ chub.id }}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     {% endfor %}
                 </div>
                 <!-- /.panel-body -->

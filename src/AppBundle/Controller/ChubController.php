@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Chub;
+use AppBundle\Form\ChubAliasType;
 use AppBundle\Security\ChubVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ChubController
@@ -48,6 +50,31 @@ class ChubController extends Controller
 
         return $this->render(':customer/chub:show.html.twig', [
             'chub' => $chub
+        ]);
+    }
+
+    /**
+     * @Route(path="/edit/{id}", name="customer_chubs_edit")
+     * @Method({"GET", "POST"})
+     *
+     * @param Chub $chub
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Chub $chub, Request $request)
+    {
+        $this->denyAccessUnlessGranted(ChubVoter::EDIT, $chub);
+
+        $form = $this->createForm(ChubAliasType::class, $chub);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('customer_chubs_show', ['id' => $chub->getId()]);
+        }
+
+        return $this->render(':customer/chub:edit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
