@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Notification
  * @package AppBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Notification

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller\Customer;
 
+use AppBundle\Entity\Chub;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
