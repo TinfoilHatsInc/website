@@ -38,16 +38,16 @@ class NotificationController extends Controller
     }
 
     /**
-     * @Route(path="/{notification}", name="customer_notifications_show")
+     * @Route(path="/{id}", name="customer_notifications_show")
      * @Method({"GET"})
      *
      * @param $notification
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($notification)
+    public function showAction(Notification $notification)
     {
         $this->denyAccessUnlessGranted(NotificationVoter::VIEW, $notification);
-
+        
         return $this->render(':customer/notifications:show.html.twig', [
             'notification' => $notification
         ]);

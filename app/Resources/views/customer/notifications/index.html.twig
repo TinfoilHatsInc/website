@@ -41,9 +41,11 @@
                                         <td>{{ notification.triggerName }}</td>
                                         <td>{{ notification.createdAt|date('Y/m/d H:i:s') }}</td>
                                         <td>{{ notification.snapshots|length }}</td>
-                                        <a href="{{ path('admin_products_show', {'id': product.id}) }}" class="btn btn-sm btn-primary">
-                                            <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
-                                        </a>
+                                        <td>
+                                            <a href="{{ path('customer_notifications_show', {'id': notification.id}) }}" class="btn btn-sm btn-primary">
+                                                <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
