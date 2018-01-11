@@ -20,14 +20,38 @@
                     {% for chub in chubs %}
                         <a href="{{ path('customer_chubs_show', {'id': chub.id}) }}">
                             <div class="col-lg-3 col-md-6">
-                                <div class="panel {% if chub.alarmEnabled %}panel-red{% else %}panel-green{% endif %}">
+                                <div class="panel
+                                        {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                            panel-red
+                                        {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                            panel-green
+                                        {% else %}
+                                            panel-default
+                                        {% endif %}
+                                        ">
                                     <div class="panel-heading">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <i class="fa {% if chub.alarmEnabled %}fa-bell-o{% else %}fa-bell-slash-o{% endif %} fa-5x"></i>
+                                                <i class="fa
+                                                    {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                                        fa-bell
+                                                    {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                                        fa-bell-o
+                                                    {% else %}
+                                                        fa-bell-slash-o
+                                                    {% endif %}
+                                                    fa-5x"></i>
                                             </div>
                                             <div class="col-xs-9 text-right">
-                                                <div class="huge">{% if chub.alarmEnabled %}On{% else %}Off{% endif %}</div>
+                                                <div class="huge">
+                                                    {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                                        On
+                                                    {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                                        Armed
+                                                    {% else %}
+                                                        Off
+                                                    {% endif %}
+                                                </div>
                                                 <br>
                                                 <div>{% if chub.alias %}{{ chub.alias }}{% endif %}</div>
                                                 <br>

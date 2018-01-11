@@ -35,9 +35,22 @@
                                 </thead>
                                 <tbody>
                                 {% for chub in chubs %}
-                                    <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %} {% if chub.alarmEnabled %}danger{% endif %}" style="cursor: pointer">
+                                    <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}
+                                            {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                                danger
+                                            {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                                success
+                                            {% endif %}" style="cursor: pointer">
                                         <td>{{ chub.id }} {% if chub.alias %}({{ chub.alias }}){% endif %}</td>
-                                        <td>{% if chub.alarmEnabled %}On{% else %}Off{% endif %}</td>
+                                        <td>
+                                            {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                                On
+                                            {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                                Armed
+                                            {% else %}
+                                                Off
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <a href="{{ path('customer_chubs_show', {'id': chub.id}) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-eye fa-fw" aria-hidden="true"></i>

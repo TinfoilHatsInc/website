@@ -23,6 +23,10 @@ class Chub
 {
     use Timestampable;
 
+    const ALARM_STATUS_OFF = 'off';
+    const ALARM_STATUS_ARMED = 'armed';
+    const ALARM_STATUS_ON = 'on';
+
     /**
      * @var string
      *
@@ -55,11 +59,11 @@ class Chub
     private $notifications;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(name="alarm_status", type="string", columnDefinition="ENUM('off', 'armed', 'on')")
      */
-    private $alarmEnabled = false;
+    private $alarmStatus;
 
     public function __construct()
     {
@@ -123,18 +127,22 @@ class Chub
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isAlarmEnabled()
+    public function getAlarmStatus()
     {
-        return $this->alarmEnabled;
+        return $this->alarmStatus;
     }
 
     /**
-     * @param bool $alarmEnabled
+     * @param string $alarmStatus
      */
-    public function setAlarmEnabled($alarmEnabled)
+    public function setAlarmStatus($alarmStatus)
     {
-        $this->alarmEnabled = $alarmEnabled;
+        if(!in_array($alarmStatus, array(self::ALARM_STATUS_OFF, self::ALARM_STATUS_ARMED, self::ALARM_STATUS_ON))) {
+            throw new \InvalidArgumentException(sprintf("Invalid Alarm Status. Should be one of 'off', 'armed', 'on', got '%s'", $alarmStatus));
+        }
+
+        $this->alarmStatus = $alarmStatus;
     }
 }

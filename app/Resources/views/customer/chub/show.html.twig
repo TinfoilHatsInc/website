@@ -32,9 +32,22 @@
                                     <td>Chub</td>
                                     <td>{{ chub.id }} {% if chub.alias %}({{ chub.alias }}){% endif %}</td>
                                 </tr>
-                                <tr class="even {% if chub.alarmEnabled %}danger{% endif %}">
+                                <tr class="even
+                                            {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                                danger
+                                            {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                                success
+                                            {% endif %}">
                                     <td>Alarm Status</td>
-                                    <td>{% if chub.alarmEnabled %}On{% else %}Off{% endif %}</td>
+                                    <td>
+                                        {% if chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ON') %}
+                                            On
+                                        {% elseif chub.alarmStatus == constant('AppBundle\\Entity\\Chub::ALARM_STATUS_ARMED') %}
+                                            Armed
+                                        {% else %}
+                                            Off
+                                        {% endif %}
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
