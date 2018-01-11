@@ -47,7 +47,7 @@ class NotificationController extends Controller
     public function showAction(Notification $notification)
     {
         $this->denyAccessUnlessGranted(NotificationVoter::VIEW, $notification);
-        
+
         return $this->render(':customer/notifications:show.html.twig', [
             'notification' => $notification
         ]);

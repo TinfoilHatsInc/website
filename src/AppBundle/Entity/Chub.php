@@ -47,6 +47,13 @@ class Chub
      */
     private $notifications;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $alarmEnabled = false;
+
     public function __construct()
     {
         $this->notifications = new ArrayCollection();
@@ -90,5 +97,21 @@ class Chub
     public function setNotifications($notifications)
     {
         $this->notifications = $notifications;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAlarmEnabled()
+    {
+        return $this->alarmEnabled;
+    }
+
+    /**
+     * @param bool $alarmEnabled
+     */
+    public function setAlarmEnabled($alarmEnabled)
+    {
+        $this->alarmEnabled = $alarmEnabled;
     }
 }

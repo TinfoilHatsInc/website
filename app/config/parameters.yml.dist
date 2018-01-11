@@ -23,3 +23,4 @@ parameters:
     max_failed_login_attempts: 3
 
     chub_database: name
+    snapshot_dir: '%kernel.project_dir%/web'

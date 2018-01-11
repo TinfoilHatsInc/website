@@ -59,7 +59,9 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             {% for snapshot in notification.snapshots %}
-                                <img src="{{ snapshot.filePath }}" alt="" style="max-width: 300px;">
+                                <a href="{{ path('fetch_snapshot_image', {'id': snapshot.id}) }}">
+                                    <img src="{{ path('fetch_snapshot_image', {'id': snapshot.id}) }}" alt="" style="max-width: 300px;">
+                                </a>
                             {% endfor %}
                         </div>
                         <!-- /.panel-body -->
