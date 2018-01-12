@@ -65,6 +65,13 @@ class Chub
      */
     private $alarmStatus;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\DeadModule", mappedBy="chub")
+     */
+    private $deadModules;
+
     public function __construct()
     {
         $this->alarmStatus = self::ALARM_STATUS_OFF;
