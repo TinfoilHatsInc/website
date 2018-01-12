@@ -39,6 +39,13 @@ class Chub
     /**
      * @var string
      *
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $chubKey;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $alias;
@@ -72,8 +79,12 @@ class Chub
      */
     private $deadModules;
 
-    public function __construct()
+    public function __construct($key)
     {
+        if(!is_string($key)) {
+            throw new \InvalidArgumentException(sprintf("Key must be of type string, %s given", gettype($key)));
+        }
+        $this->chubKey = $key;
         $this->alarmStatus = self::ALARM_STATUS_OFF;
         $this->notifications = new ArrayCollection();
         $this->deadModules = new ArrayCollection();
@@ -85,6 +96,14 @@ class Chub
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->chubKey;
     }
 
     /**

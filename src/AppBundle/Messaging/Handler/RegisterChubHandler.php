@@ -12,6 +12,7 @@ namespace AppBundle\Messaging\Handler;
 use AppBundle\Entity\Chub;
 use AppBundle\Entity\User;
 use AppBundle\Messaging\Command\RegisterChub;
+use AppBundle\Util\RandomGenerator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -56,7 +57,7 @@ class RegisterChubHandler
      */
     private function createNewChubEntity(User $user)
     {
-        $chub = new Chub();
+        $chub = new Chub(RandomGenerator::generateString(35));
         $chub->setUser($user);
         $this->em->persist($chub);
         $this->em->flush();
@@ -71,10 +72,11 @@ class RegisterChubHandler
     private function registerInKeyDatabase(Chub $chub)
     {
         $connection = $this->chubEm->getConnection();
-        $sql = 'INSERT INTO IDTable (deviceid, user) VALUES (:deviceid, :user)';
+        $sql = 'INSERT INTO IDTable (deviceid, set_key, user) VALUES (:deviceid, :set_key, :user)';
         $stmt = $connection->prepare($sql);
         $stmt->execute([
             'deviceid' => $chub->getId(),
+            'set_key' => $chub->getKey(),
             'user' => $chub->getUser()->getId()
         ]);
     }
