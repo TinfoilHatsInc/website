@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class DeadModule
  * @package AppBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\DeadModuleRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class DeadModule

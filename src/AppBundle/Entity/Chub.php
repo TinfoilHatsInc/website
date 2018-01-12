@@ -76,6 +76,7 @@ class Chub
     {
         $this->alarmStatus = self::ALARM_STATUS_OFF;
         $this->notifications = new ArrayCollection();
+        $this->deadModules = new ArrayCollection();
     }
 
     /**
@@ -152,5 +153,21 @@ class Chub
         }
 
         $this->alarmStatus = $alarmStatus;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDeadModules()
+    {
+        return $this->deadModules;
+    }
+
+    /**
+     * @param ArrayCollection $deadModules
+     */
+    public function setDeadModules($deadModules)
+    {
+        $this->deadModules = $deadModules;
     }
 }
