@@ -133,6 +133,7 @@ services:
     tinfoil.service.cart:
         class: AppBundle\Services\ShoppingCart\ShoppingCartService
         public: true
+        scope: request
         arguments: ['@service_container', '@security.token_storage']
 
     tinfoil.service.session_cart:

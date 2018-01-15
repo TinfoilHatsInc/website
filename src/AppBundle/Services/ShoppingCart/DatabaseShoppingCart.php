@@ -139,7 +139,6 @@ class DatabaseShoppingCart implements ShoppingCart
         foreach ($cartProducts as $cartProduct) {
             $cart->addProduct($cartProduct->getProduct(), $cartProduct->getAmount());
         }
-
         return $cart;
     }
 
