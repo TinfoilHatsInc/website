@@ -31,15 +31,12 @@ class SnapshotController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $filename = explode('/', $snapshot->getFilePath());
-        $filename = end($filename);
-
-        $response = new BinaryFileResponse($this->getParameter('snapshot_dir') . $snapshot->getFilePath());
+        $response = new BinaryFileResponse($this->getParameter('snapshot_dir') . '/' . $snapshot->getFileName());
         $response->trustXSendfileTypeHeader();
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_INLINE,
-            $filename,
-            iconv('UTF-8', 'ASCII//TRANSLIT', $filename)
+            $snapshot->getFileName(),
+            iconv('UTF-8', 'ASCII//TRANSLIT', $snapshot->getFileName())
         );
 
         return $response;

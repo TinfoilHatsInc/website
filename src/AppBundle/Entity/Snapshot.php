@@ -38,9 +38,9 @@ class Snapshot
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="file_name", type="string", nullable=true)
      */
-    private $filePath;
+    private $fileName;
 
     /**
      * @return int
@@ -77,16 +77,16 @@ class Snapshot
     /**
      * @return string
      */
-    public function getFilePath()
+    public function getFileName()
     {
-        return $this->filePath;
+        return $this->fileName;
     }
 
     /**
-     * @param string $filePath
+     * @param string $fileName
      */
-    public function setFilePath($filePath)
+    public function setFileName($fileName)
     {
-        $this->filePath = $filePath;
+        $this->fileName = $fileName;
     }
 }
