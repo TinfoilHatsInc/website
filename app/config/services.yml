@@ -127,6 +127,15 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Messaging\Command\SendOrderEmail }
 
+    tinfoil.command.update_payment_status:
+        class: AppBundle\Messaging\Handler\UpdatePaymentStatusHandler
+        public: true
+        arguments:
+            $apiKey: '%mollie_api_key%'
+            $em: '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: command_handler, handles: AppBundle\Messaging\Command\UpdatePaymentStatus }
+
 
     ### Services ###
 

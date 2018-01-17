@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Order;
+use AppBundle\Messaging\Command\UpdatePaymentStatus;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,34 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
 class PaymentController extends Controller
 {
     /**
-     * @Route(path="/create", name="create_payment")
+     * @Route(path="/mollie", name="mollie_webhook")
      * @Method("POST")
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function createOrderAction(Request $request)
+    public function updatePaymentStatusAction(Request $request)
     {
-        if(!$this->isCsrfTokenValid('order_csrf_token', $request->get('order_csrf_token'))) {
-            return new Response("Invalid CSRF token", Response::HTTP_BAD_REQUEST);
-        }
-
-        $cart = $this->get('tinfoil.service.cart')->getCartModel();
-        $mollieService = $this->get('tinfoil.service.mollie');
-
-        $productArray = [];
-        foreach ($cart->getProducts() as $product) {
-            $orderedProduct =
-            $productArray[] = $product['product'];
-        }
-
-        $order = new Order();
-        $order->setOrderedProducts(new ArrayCollection($productArray));
-        $order->setUser($this->getUser());
-        $this->getDoctrine()->getManager()->persist($order);
-        $this->getDoctrine()->getManager()->flush();
-        $redirectUrl = $mollieService->createPayment($order);
-
-        return $this->redirect($redirectUrl);
+        $this->get('command_bus')->handle(new UpdatePaymentStatus($request->get('id')));
+        return new Response();
     }
 }
