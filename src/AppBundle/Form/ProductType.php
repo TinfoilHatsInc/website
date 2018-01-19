@@ -38,7 +38,7 @@ class ProductType extends AbstractType
                 'label' => 'Product Icon'
             ])
             ->add('chubRequired', CheckboxType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'Show CHUB Required Warning'
             ])
             ->add('features', CollectionType::class, [
