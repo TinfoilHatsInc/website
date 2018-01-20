@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class NotificationController
@@ -46,7 +47,11 @@ class NotificationController extends Controller
      */
     public function showAction(Notification $notification)
     {
-        $this->denyAccessUnlessGranted(NotificationVoter::VIEW, $notification);
+        try {
+            $this->denyAccessUnlessGranted(NotificationVoter::VIEW, $notification);
+        } catch (\Exception $e) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->render(':customer/notifications:show.html.twig', [
             'notification' => $notification
